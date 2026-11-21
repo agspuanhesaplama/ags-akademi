@@ -115,8 +115,17 @@ footer{text-align:center;color:#73859e;font-size:11px;padding:12px}
 .app-view{display:none}.app-view.active{display:block}
 .view-heading{margin:16px 0 10px;font-size:21px;font-weight:850}
 @media(max-width:760px){.wrap{padding:68px 12px 35px}.app-sidebar{right:0;bottom:auto;width:100%;height:60px;padding:7px 9px;flex-direction:row;align-items:center;gap:6px;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line)}.sidebar-logo{display:none}.nav-btn{width:auto;flex:1;min-width:max-content;text-align:center;padding:11px 10px;font-size:12px}.top{flex-wrap:wrap}.brand{font-size:20px}}
+
+/* Dokunmatik ve masaüstü için açık takvim düğmeleri */
+.calendar-field{display:flex;align-items:stretch;gap:8px;max-width:360px}
+.calendar-field input[type="date"]{flex:1;min-width:0;max-width:none;color-scheme:dark;cursor:pointer}
+.calendar-open{flex:0 0 52px;padding:10px;background:#253650;color:#eaf1fc;border:1px solid #3a506d;border-radius:11px;font-size:23px;line-height:1}
+.calendar-open:hover,.calendar-open:focus-visible{background:#315c54;outline:2px solid #45d6a0;outline-offset:2px}
 </style>
 <link rel="manifest" href="./manifest.json">
+<style>
+.v4-toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0}.v4-toolbar button{padding:9px 12px}.v4-toolbar strong{min-width:155px;text-align:center}.v4-calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}.v4-day{min-height:82px;background:#17243a;border:1px solid #2a3a53;border-radius:10px;padding:7px 4px;font-size:11px;color:#dce7f5;overflow:hidden}.v4-day.today{border-color:#45d6a0}.v4-day.outside{opacity:.35}.v4-day b{display:block;margin-bottom:5px}.v4-day small{display:block;font-size:10px;color:#9aabc1;line-height:1.4}.v4-day .done{color:#45d6a0}.v4-day .missed{color:#ff7585}.v4-weekday{text-align:center;color:#9aabc1;font-size:11px;padding:8px 0}.v4-progress{height:9px;border-radius:12px;background:#26354b;overflow:hidden;margin:8px 0}.v4-progress span{display:block;height:100%;background:#45d6a0}.v4-bar{display:flex;align-items:center;gap:8px;margin:9px 0;font-size:12px}.v4-bar label{width:120px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin:0}.v4-bar-track{height:14px;flex:1;border-radius:8px;background:#26354b;overflow:hidden}.v4-bar-track i{display:block;height:100%;background:#79a9ff}.v4-bar strong{width:55px;text-align:right;font-size:11px}.v4-filters{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.v4-filters select{width:auto;flex:1;min-width:120px}.v4-mini{color:#9aabc1;font-size:12px}.v4-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.v4-metrics .metric strong{font-size:20px}@media(max-width:560px){.v4-day{min-height:65px;padding:5px 2px;font-size:10px}.v4-day small{font-size:9px}.v4-metrics .metric strong{font-size:17px}.v4-bar label{width:85px}}
+</style>
 </head>
 <body>
 <nav class="app-sidebar" aria-label="Ana menü">
@@ -160,7 +169,7 @@ footer{text-align:center;color:#73859e;font-size:11px;padding:12px}
  <div class="grid">
   <div class="metric"><small>Deneme sayısı</small><strong id="mCount">0</strong></div>
   <div class="metric"><small>Son toplam net</small><strong id="mNet">—</strong></div>
-  <div class="metric"><small>Son çalışma endeksi</small><strong id="mScore">—</strong></div>
+  <div class="metric"><small>Son tahmini puan</small><strong id="mScore">—</strong></div>
  </div>
  <div class="featured-grid" aria-live="polite"><div class="featured-card best" id="bestExamCard"></div><div class="featured-card latest" id="latestExamCard"></div></div>
  <div class="notice">Net hesabı: Doğru − (Yanlış ÷ 4). Kayıtlar bu cihazdaki tarayıcıda saklanır.</div>
@@ -175,7 +184,7 @@ footer{text-align:center;color:#73859e;font-size:11px;padding:12px}
   <button class="download" data-export="netChart">PNG olarak indir</button>
  </div>
  <div class="chartbox">
-  <div class="charttitle">Bütün denemelerin çalışma endeksi</div>
+  <div class="charttitle">Bütün denemelerin tahmini puanı</div>
   <div id="scoreChart" class="empty">Henüz puan verisi yok.</div>
   <button class="download" data-export="scoreChart">PNG olarak indir</button>
  </div>
@@ -243,7 +252,7 @@ footer{text-align:center;color:#73859e;font-size:11px;padding:12px}
   </div>
   <div>
    <label for="examDate">Deneme tarihi</label>
-   <input class="date" id="examDate" type="date">
+   <div class="calendar-field"><input class="date" id="examDate" type="date"><button type="button" class="calendar-open" data-calendar="examDate" aria-label="Takvimi aç" title="Takvimden tarih seç">📅</button></div>
   </div>
  </div>
  <div style="margin-top:12px">
@@ -260,7 +269,7 @@ footer{text-align:center;color:#73859e;font-size:11px;padding:12px}
   <small id="totalQuestionLabel">80 soru üzerinden</small>
  </div>
  <div class="metric" style="margin-top:8px">
-  <small>TAHMİNİ ÇALIŞMA ENDEKSİ</small>
+  <small>TAHMİNİ PUAN</small>
   <strong id="liveScore">—</strong>
   <small id="scoreSub">Alt test netlerini girince hesaplanır.</small>
  </div>
@@ -287,20 +296,22 @@ footer{text-align:center;color:#73859e;font-size:11px;padding:12px}
 <div class="app-view" id="view-questions">
  <h1 class="view-heading">Soru Bankası Takibi</h1>
  <section class="section"><h2>Günlük soru kaydı</h2>
-  <div class="row2"><div><label for="qbDate">Tarih</label><input id="qbDate" type="date"></div><div><label for="qbSubject">Branş</label><select id="qbSubject"></select></div></div>
+  <div class="row2"><div><label for="qbDate">Tarih</label><div class="calendar-field"><input id="qbDate" type="date"><button type="button" class="calendar-open" data-calendar="qbDate" aria-label="Takvimi aç" title="Takvimden tarih seç">📅</button></div></div><div><label for="qbSubject">Branş</label><select id="qbSubject"></select></div></div>
   <div class="row2" style="margin-top:10px"><div><label for="qbCorrect">Doğru</label><input id="qbCorrect" type="number" min="0" step="1" placeholder="0"></div><div><label for="qbWrong">Yanlış</label><input id="qbWrong" type="number" min="0" step="1" placeholder="0"></div></div>
   <div class="actions"><button id="qbSave">Soru kaydını ekle</button></div>
  </section>
- <section class="section"><h2>Toplam soru istatistikleri</h2><div id="qbSummary"></div><h2 style="margin-top:20px">Günlük kayıt geçmişi</h2><div id="qbHistory"></div></section>
+ <section class="section" id="v4Questions"><h2>📈 Soru çözüm analizleri</h2><div class="v4-filters"><select id="v4QPeriod" aria-label="Analiz dönemi"><option value="7">Son 7 gün</option><option value="30">Son 30 gün</option><option value="all">Tüm zamanlar</option></select></div><div id="v4QMetrics"></div><div class="chartbox"><div class="charttitle">Günlük çözülen soru</div><div id="v4QChart"></div></div><h3 style="font-size:14px">Branşlara göre soru dağılımı</h3><div id="v4QBranches"></div></section>
+<section class="section"><h2>Toplam soru istatistikleri</h2><div id="qbSummary"></div><h2 style="margin-top:20px">Günlük kayıt geçmişi</h2><div id="qbHistory"></div></section>
 </div>
 <div class="app-view" id="view-planner">
  <h1 class="view-heading">Çalışma Programı</h1>
  <section class="section"><h2>Yeni çalışma hedefi</h2>
-  <div class="row2"><div><label for="planDate">Tarih</label><input id="planDate" type="date"></div><div><label for="planSubject">Branş</label><select id="planSubject"></select></div></div>
+  <div class="row2"><div><label for="planDate">Tarih</label><div class="calendar-field"><input id="planDate" type="date"><button type="button" class="calendar-open" data-calendar="planDate" aria-label="Takvimi aç" title="Takvimden tarih seç">📅</button></div></div><div><label for="planSubject">Branş</label><select id="planSubject"></select></div></div>
   <div style="margin-top:10px"><label for="planTask">Çalışma hedefi</label><input id="planTask" maxlength="200" placeholder="Örn. Tarih: İlk Türk devletleri, 40 soru"></div>
   <div class="actions"><button id="planAdd">Hedef ekle</button></div>
  </section>
- <section class="section"><h2>Plan ilerlemesi</h2><div id="planSummary"></div><h2 style="margin-top:20px">Görevlerim</h2><div id="planHistory"></div></section>
+ <section class="section" id="v4Planner"><h2>🗓️ Haftalık ve aylık çalışma takvimi</h2><div class="v4-toolbar"><button class="secondary" id="v4Prev" type="button">‹ Önceki</button><strong id="v4PeriodLabel"></strong><button class="secondary" id="v4Next" type="button">Sonraki ›</button><button class="secondary" id="v4Today" type="button">Bugün</button></div><div class="v4-filters"><select id="v4CalendarMode" aria-label="Takvim görünümü"><option value="week">Haftalık görünüm</option><option value="month">Aylık görünüm</option></select></div><div id="v4PlanMetrics"></div><div id="v4Calendar"></div><div class="notice">Takvimde bir güne dokunarak yeni hedef tarihini seçebilirsin. Kısmen tamamlanan görevler ilerleme hesabına yarım katkı sağlar.</div></section>
+<section class="section"><h2>Plan ilerlemesi</h2><div id="planSummary"></div><h2 style="margin-top:20px">Görevlerim</h2><div id="planHistory"></div></section>
 </div>
 <footer>AGS Akademi · Veriler cihazında saklanır. Tarayıcı verilerini silersen kayıtlar da silinebilir.</footer>
 </main>
@@ -445,7 +456,7 @@ function calc(){
  return {total,parts,raw,ok};
 }
 
-/* Kişisel çalışma endeksi: resmî ÖSYM puanı değildir. */
+/* Tahmini puan göstergesi: resmî ÖSYM puanı değildir. */
 function estimateIndex(parts,year){
  const list=subjectTemplates.map(s=>({...s,q:year==='2025'?s.q25:s.q26}));
 
@@ -471,7 +482,7 @@ function updateLive(){
  $('error').textContent=x.ok?'':'Sayıları kontrol et: doğru + yanlış sayısı branş soru sayısını aşamaz; negatif veya ondalıklı sayı kullanma.';
 
  $('liveScore').textContent=x.ok?fmt(estimateIndex(x.parts,$('examYear').value)):'—';
- $('scoreSub').textContent='0–100 kişisel çalışma endeksi. Resmî ÖSYM P1 puanı değildir.';
+ $('scoreSub').textContent='0–100 ölçeğinde tahmini puan. Resmî ÖSYM sınav puanı değildir.';
 
  const m=motivation(x.total);
  $('motivation').innerHTML='<b>'+m[0]+'</b><br>'+m[1];
@@ -730,7 +741,7 @@ function renderCompare(){
    </table>
   </div>
 
-  <div class="insight">Çalışma endeksi: ${fmt(a.score||0)} → ${fmt(b.score||0)} · Değişim ${changeHtml((b.score||0)-(a.score||0))}</div>`;
+  <div class="insight">Tahmini puan: ${fmt(a.score||0)} → ${fmt(b.score||0)} · Değişim ${changeHtml((b.score||0)-(a.score||0))}</div>`;
 }
 
 function getSelected(){
@@ -939,7 +950,7 @@ function render(){
    <div class="history-top">
     <div>
      <div class="history-name">${safe(r.name)}</div>
-     <div class="history-meta">${r.date} · ${fmt(r.total)} net · Çalışma endeksi ${r.score===null?'—':fmt(r.score)}</div>
+     <div class="history-meta">${r.date} · ${fmt(r.total)} net · Tahmini puan ${r.score===null?'—':fmt(r.score)}</div>
     </div>
     <button class="danger" style="padding:7px 10px;font-size:11px;flex:0 0 auto" data-del="${safe(r.id)}">Sil</button>
    </div>
@@ -1091,7 +1102,7 @@ $('export').onclick=()=>{
  }
 
  const rows=[
-  ['Deneme adı','Tarih','Yıl',...subjectTemplates.map(s=>s.name+' net'),'Toplam net','Çalışma endeksi'],
+  ['Deneme adı','Tarih','Yıl',...subjectTemplates.map(s=>s.name+' net'),'Toplam net','Tahmini puan'],
   ...records.map(r=>[
    r.name,r.date,r.year,
    ...subjectTemplates.map(s=>r.parts[s.id]||0),
@@ -1391,6 +1402,77 @@ await updateUI();
  window.agsRenderTrackers=renderTrackers;
  document.querySelectorAll('.nav-btn').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.view==='questions'||b.dataset.view==='planner')renderTrackers()}));
  renderTrackers();
+})();
+</script>
+<script>
+/* Tarih alanlarının yanında her cihazda görünen takvim açma düğmesi */
+document.addEventListener('click',function(event){
+ const button=event.target.closest('[data-calendar]');
+ if(!button)return;
+ const field=document.getElementById(button.dataset.calendar);
+ if(!field)return;
+ try{
+  if(typeof field.showPicker==='function'){field.showPicker();return;}
+ }catch(error){/* Tarayıcı izin vermiyorsa yerel girişe dön. */}
+ field.focus();
+ field.click();
+});
+</script>
+<script>
+/* AGS Akademi 4.0: mevcut tracker verilerini değiştirmeden takvim ve istatistik görünümü */
+(function(){
+ const el=id=>document.getElementById(id);
+ const dateStr=d=>[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');
+ const parse=d=>new Date(d+'T12:00:00');
+ const shift=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x};
+ const startWeek=d=>shift(d,-(d.getDay()+6)%7);
+ const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const read=type=>{try{const x=JSON.parse(localStorage.getItem('agsAkademi_'+type+'_'+(window.agsCurrentUserId||'guest'))||'[]');return Array.isArray(x)?x:[]}catch(e){return []}};
+ let cursor=new Date();cursor.setHours(12,0,0,0);
+ function renderCalendar(){
+  const mode=el('v4CalendarMode').value,anchor=mode==='week'?startWeek(cursor):new Date(cursor.getFullYear(),cursor.getMonth(),1,12);
+  const first=mode==='week'?anchor:startWeek(anchor);
+  const days=mode==='week'?7:42;
+  const end=shift(first,days-1);
+  const plans=read('planner');const inRange=plans.filter(x=>x.date>=dateStr(first)&&x.date<=dateStr(end));
+  const done=inRange.filter(x=>x.status==='done').length,partial=inRange.filter(x=>x.status==='partial').length;
+  const rate=inRange.length?Math.round((done+partial*.5)/inRange.length*100):0;
+  el('v4PeriodLabel').textContent=mode==='week'?first.toLocaleDateString('tr-TR',{day:'numeric',month:'short'})+' – '+end.toLocaleDateString('tr-TR',{day:'numeric',month:'short',year:'numeric'}):cursor.toLocaleDateString('tr-TR',{month:'long',year:'numeric'});
+  el('v4PlanMetrics').innerHTML='<div class="v4-metrics"><div class="metric"><small>Görev</small><strong>'+inRange.length+'</strong></div><div class="metric"><small>Tamamlanan</small><strong>'+done+'</strong></div><div class="metric"><small>İlerleme</small><strong>%'+rate+'</strong></div></div><div class="v4-progress"><span style="width:'+rate+'%"></span></div>';
+  let html='<div class="v4-calendar">'+['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'].map(x=>'<div class="v4-weekday">'+x+'</div>').join('');
+  for(let i=0;i<days;i++){
+   const d=shift(first,i),ds=dateStr(d),items=plans.filter(x=>x.date===ds),out=mode==='month'&&d.getMonth()!==cursor.getMonth();
+   const statuses=items.map(x=>x.status),complete=statuses.filter(x=>x==='done').length;
+   html+='<button type="button" class="v4-day'+(ds===dateStr(new Date())?' today':'')+(out?' outside':'')+'" data-v4-day="'+ds+'" title="'+ds+' tarihine hedef ekle"><b>'+d.getDate()+'</b>'+(items.length?'<small class="'+(complete===items.length?'done':statuses.includes('missed')?'missed':'')+'">'+complete+'/'+items.length+' tamam</small><small>'+esc(items[0].subject).slice(0,18)+'</small>':'<small>＋ Hedef</small>')+'</button>';
+  }
+  el('v4Calendar').innerHTML=html+'</div>';
+ }
+ function renderQuestions(){
+  const all=read('questions'),period=el('v4QPeriod').value,today=parse(dateStr(new Date()));
+  const start=period==='all'?null:dateStr(shift(today,-(Number(period)-1)));
+  const rows=all.filter(x=>!start||x.date>=start).filter(x=>x.date<=dateStr(today));
+  const correct=rows.reduce((a,x)=>a+Number(x.c||0),0),wrong=rows.reduce((a,x)=>a+Number(x.w||0),0),total=correct+wrong;
+  el('v4QMetrics').innerHTML='<div class="v4-metrics"><div class="metric"><small>Çözülen</small><strong>'+total+'</strong></div><div class="metric"><small>Doğruluk</small><strong>%'+(total?Math.round(correct/total*100):0)+'</strong></div><div class="metric"><small>Çalışılan gün</small><strong>'+new Set(rows.map(x=>x.date)).size+'</strong></div></div>';
+  const map=new Map();rows.forEach(x=>map.set(x.date,(map.get(x.date)||0)+Number(x.c||0)+Number(x.w||0)));
+  let dates=period==='all'?[...map.keys()].sort():Array.from({length:Number(period)},(_,i)=>dateStr(shift(today,i-Number(period)+1)));
+  if(dates.length>31){dates=dates.slice(-31);}
+  const max=Math.max(1,...dates.map(d=>map.get(d)||0));
+  el('v4QChart').innerHTML=dates.length?'<div style="display:flex;align-items:end;gap:3px;height:160px;padding:10px 0;border-bottom:1px solid #344761">'+dates.map(d=>'<div title="'+d+': '+(map.get(d)||0)+' soru" style="flex:1;min-width:2px;height:'+Math.max(2,(map.get(d)||0)/max*100)+'%;background:#45d6a0;border-radius:4px 4px 0 0"></div>').join('')+'</div><div class="v4-mini">'+esc(dates[0])+' — '+esc(dates[dates.length-1])+(period==='all'&&map.size>31?' · Grafik son 31 kayıt gününü gösterir':'')+'</div>':'<div class="empty">Henüz soru kaydı yok.</div>';
+  const by=new Map();rows.forEach(x=>by.set(x.subject,(by.get(x.subject)||0)+Number(x.c||0)+Number(x.w||0)));
+  el('v4QBranches').innerHTML=by.size?[...by.entries()].sort((a,b)=>b[1]-a[1]).map(([name,count])=>'<div class="v4-bar"><label title="'+esc(name)+'">'+esc(name)+'</label><div class="v4-bar-track"><i style="width:'+(total?count/total*100:0)+'%"></i></div><strong>'+count+'</strong></div>').join(''):'<div class="empty">Bu dönemde soru kaydı bulunmuyor.</div>';
+ }
+ function refresh(){renderCalendar();renderQuestions()}
+ el('v4Prev').onclick=()=>{cursor=el('v4CalendarMode').value==='week'?shift(cursor,-7):new Date(cursor.getFullYear(),cursor.getMonth()-1,15,12);renderCalendar()};
+ el('v4Next').onclick=()=>{cursor=el('v4CalendarMode').value==='week'?shift(cursor,7):new Date(cursor.getFullYear(),cursor.getMonth()+1,15,12);renderCalendar()};
+ el('v4Today').onclick=()=>{cursor=new Date();cursor.setHours(12,0,0,0);renderCalendar()};
+ el('v4CalendarMode').onchange=renderCalendar;el('v4QPeriod').onchange=renderQuestions;
+ el('v4Calendar').addEventListener('click',e=>{const b=e.target.closest('[data-v4-day]');if(!b)return;el('planDate').value=b.dataset.v4Day;el('planTask').focus();window.scrollTo({top:el('planTask').getBoundingClientRect().top+window.scrollY-120,behavior:'smooth'})});
+ // Existing handlers are registered first; refresh after their synchronous writes.
+ document.addEventListener('click',e=>{if(e.target.closest('#qbSave,#planAdd,[data-qb-del],[data-plan-del]'))queueMicrotask(refresh)});
+ document.addEventListener('change',e=>{if(e.target.matches('[data-plan-status]'))queueMicrotask(refresh)});
+ document.querySelectorAll('.nav-btn').forEach(b=>b.addEventListener('click',refresh));
+ window.addEventListener('storage',refresh);
+ refresh();
 })();
 </script>
 </body>
