@@ -21,6 +21,7 @@ h2{font-size:18px;margin:0 0 13px}
 .metric{background:var(--panel2);padding:13px;border-radius:14px;min-width:0}
 .metric small{display:block;color:var(--muted);font-size:11px}
 .metric strong{display:block;font-size:23px;margin-top:4px;font-variant-numeric:tabular-nums}
+.featured-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}.featured-card{background:#17243a;border:1px solid #344761;border-radius:14px;padding:14px;min-width:0}.featured-card.best{border-color:#876d35}.featured-card.latest{border-color:#315c54}.featured-label{font-size:12px;font-weight:800;color:#f4c76b}.featured-card.latest .featured-label{color:#45d6a0}.featured-name{font-weight:750;margin-top:9px;overflow-wrap:anywhere}.featured-meta{font-size:12px;color:#9aabc1;margin-top:5px}.featured-net{font-size:25px;font-weight:850;margin-top:10px}.featured-net small{font-size:12px;font-weight:500;color:#9aabc1}@media(max-width:540px){.featured-grid{grid-template-columns:1fr}}
 label{display:block;color:var(--muted);font-size:12px;margin:0 0 6px}
 input,select{width:100%;background:#0d1727;color:var(--txt);border:1px solid #344761;border-radius:11px;padding:12px;font-size:15px;outline:none}
 input:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 3px #79a9ff20}
@@ -131,6 +132,7 @@ footer{text-align:center;color:#73859e;font-size:11px;padding:12px}
   <div class="metric"><small>Son toplam net</small><strong id="mNet">—</strong></div>
   <div class="metric"><small>Son çalışma endeksi</small><strong id="mScore">—</strong></div>
  </div>
+ <div class="featured-grid" aria-live="polite"><div class="featured-card best" id="bestExamCard"></div><div class="featured-card latest" id="latestExamCard"></div></div>
  <div class="notice">Net hesabı: Doğru − (Yanlış ÷ 4). Kayıtlar bu cihazdaki tarayıcıda saklanır.</div>
 </section>
 
@@ -777,6 +779,12 @@ function render(){
  $('mCount').textContent=n;
  $('mNet').textContent=last?fmt(last.total):'—';
  $('mScore').textContent=last&&last.score!==null?fmt(last.score):'—';
+ const best=records.length?[...records].sort((a,b)=>Number(b.total)-Number(a.total)||b.date.localeCompare(a.date))[0]:null;
+ function featuredCard(record,label){
+  return `<div class="featured-label">${label}</div>`+(record ? `<div class="featured-name">${safe(record.name)}</div><div class="featured-meta">${safe(record.date)}</div><div class="featured-net">${fmt(record.total)} <small>net</small></div>` : '<div class="featured-meta">İlk denemeni kaydettiğinde burada görünecek.</div>');
+ }
+ $('bestExamCard').innerHTML=featuredCard(best,'🏆 En iyi denemen');
+ $('latestExamCard').innerHTML=featuredCard(last,'📅 Son denemen');
 
  const charts=[
   ['netChart',records.map(r=>r.total),records.map((r,i)=>'D'+(i+1)),'#45d6a0','İlk denemeni kaydettiğinde grafik burada oluşacak.'],
