@@ -104,6 +104,7 @@ footer{text-align:center;color:#73859e;font-size:11px;padding:12px}
 .sim-actions button{flex:1;min-width:120px}
 .sim-hint{font-size:12px;color:var(--muted);line-height:1.5;margin-top:10px}
 
+.tracker-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px;margin:8px 0;border:1px solid var(--line);background:#17243a;border-radius:12px;flex-wrap:wrap}.tracker-row span{flex:1;min-width:150px}.tracker-row small{color:var(--muted)}.tracker-row select{width:auto;max-width:170px}.tracker-row button{padding:9px 12px}
 /* AGS Akademi: responsive side navigation */
 .wrap{max-width:1320px;padding-left:238px;transition:padding .2s}
 .app-sidebar{position:fixed;z-index:40;left:0;top:0;bottom:0;width:220px;background:#101b2d;border-right:1px solid var(--line);padding:23px 12px;display:flex;flex-direction:column;gap:9px}
@@ -124,6 +125,8 @@ footer{text-align:center;color:#73859e;font-size:11px;padding:12px}
  <button class="nav-btn" type="button" data-view="simulator">⏱  Deneme Simülatörü</button>
  <button class="nav-btn" type="button" data-view="entry">✎  Deneme Kaydet</button>
  <button class="nav-btn" type="button" data-view="history">▤  Deneme Geçmişi</button>
+ <button class="nav-btn" type="button" data-view="questions">📚 Soru Bankası</button>
+ <button class="nav-btn" type="button" data-view="planner">📅 Çalışma Programı</button>
 </nav>
 <main class="wrap">
 
@@ -280,6 +283,24 @@ footer{text-align:center;color:#73859e;font-size:11px;padding:12px}
  </div>
 </section>
 
+</div>
+<div class="app-view" id="view-questions">
+ <h1 class="view-heading">Soru Bankası Takibi</h1>
+ <section class="section"><h2>Günlük soru kaydı</h2>
+  <div class="row2"><div><label for="qbDate">Tarih</label><input id="qbDate" type="date"></div><div><label for="qbSubject">Branş</label><select id="qbSubject"></select></div></div>
+  <div class="row2" style="margin-top:10px"><div><label for="qbCorrect">Doğru</label><input id="qbCorrect" type="number" min="0" step="1" placeholder="0"></div><div><label for="qbWrong">Yanlış</label><input id="qbWrong" type="number" min="0" step="1" placeholder="0"></div></div>
+  <div class="actions"><button id="qbSave">Soru kaydını ekle</button></div>
+ </section>
+ <section class="section"><h2>Toplam soru istatistikleri</h2><div id="qbSummary"></div><h2 style="margin-top:20px">Günlük kayıt geçmişi</h2><div id="qbHistory"></div></section>
+</div>
+<div class="app-view" id="view-planner">
+ <h1 class="view-heading">Çalışma Programı</h1>
+ <section class="section"><h2>Yeni çalışma hedefi</h2>
+  <div class="row2"><div><label for="planDate">Tarih</label><input id="planDate" type="date"></div><div><label for="planSubject">Branş</label><select id="planSubject"></select></div></div>
+  <div style="margin-top:10px"><label for="planTask">Çalışma hedefi</label><input id="planTask" maxlength="200" placeholder="Örn. Tarih: İlk Türk devletleri, 40 soru"></div>
+  <div class="actions"><button id="planAdd">Hedef ekle</button></div>
+ </section>
+ <section class="section"><h2>Plan ilerlemesi</h2><div id="planSummary"></div><h2 style="margin-top:20px">Görevlerim</h2><div id="planHistory"></div></section>
 </div>
 <footer>AGS Akademi · Veriler cihazında saklanır. Tarayıcı verilerini silersen kayıtlar da silinebilir.</footer>
 </main>
@@ -1278,7 +1299,7 @@ await updateUI();
 
 <script>
 (function(){
- const views=['dashboard','simulator','entry','history'];
+ const views=['dashboard','simulator','entry','history','questions','planner'];
  window.agsNavigate=function(view){
   if(!views.includes(view))view='dashboard';
   document.querySelectorAll('.app-view').forEach(el=>el.classList.toggle('active',el.id==='view-'+view));
@@ -1341,5 +1362,36 @@ await updateUI();
 })();
 </script>
 
+
+<script>
+/* Soru bankası ve kişisel plan: cihazda, kullanıcıya özel kayıt */
+(function(){
+ const $=id=>document.getElementById(id);
+ const subjects=window.subjectTemplates||['Sözel Yetenek','Sayısal Yetenek','Tarih','Türkiye Coğrafyası','Eğitim Bilimleri ve Türk Millî Eğitim Sistemi','Mevzuat'];
+ const names=Array.isArray(subjects)&&typeof subjects[0]==='string'?subjects:['Sözel Yetenek','Sayısal Yetenek','Tarih','Türkiye Coğrafyası','Eğitim Bilimleri ve Türk Millî Eğitim Sistemi','Mevzuat'];
+ ['qbSubject','planSubject'].forEach(id=>$(id).innerHTML=names.map(n=>`<option value="${n}">${n}</option>`).join(''));
+ const today=()=>{const d=new Date();return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')};
+ $('qbDate').value=$('planDate').value=today();
+ const key=type=>'agsAkademi_'+type+'_'+(window.agsCurrentUserId||'guest');
+ const read=type=>{try{const v=JSON.parse(localStorage.getItem(key(type))||'[]');return Array.isArray(v)?v:[]}catch(e){return []}};
+ const write=(type,arr)=>localStorage.setItem(key(type),JSON.stringify(arr));
+ const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ function renderTrackers(){
+  const qb=read('questions');const total=qb.reduce((a,x)=>a+x.c+x.w,0);
+  $('qbSummary').innerHTML=`<div class="grid"><div class="metric"><small>Çözülen soru</small><strong>${total}</strong></div><div class="metric"><small>Doğru</small><strong>${qb.reduce((a,x)=>a+x.c,0)}</strong></div><div class="metric"><small>Yanlış</small><strong>${qb.reduce((a,x)=>a+x.w,0)}</strong></div></div>`;
+  $('qbHistory').innerHTML=qb.length?qb.slice().reverse().map(x=>`<div class="tracker-row"><span><b>${esc(x.subject)}</b><br><small>${esc(x.date)} · ${x.c} doğru / ${x.w} yanlış</small></span><button class="danger" data-qb-del="${esc(x.id)}">Sil</button></div>`).join(''):'<div class="empty">Henüz soru kaydı yok.</div>';
+  const plan=read('planner'),done=plan.filter(x=>x.status==='done').length;
+  $('planSummary').innerHTML=`<div class="insight">${plan.length} görev · ${done} tamamlandı · Tamamlanma: %${plan.length?Math.round(done/plan.length*100):0}</div>`;
+  $('planHistory').innerHTML=plan.length?plan.slice().sort((a,b)=>a.date.localeCompare(b.date)).map(x=>`<div class="tracker-row"><span><b>${esc(x.subject)}</b><br><small>${esc(x.date)} · ${esc(x.task)}</small></span><select data-plan-status="${esc(x.id)}"><option value="todo" ${x.status==='todo'?'selected':''}>Bekliyor</option><option value="partial" ${x.status==='partial'?'selected':''}>Kısmen</option><option value="done" ${x.status==='done'?'selected':''}>Tamamlandı</option><option value="missed" ${x.status==='missed'?'selected':''}>Yapılmadı</option></select><button class="danger" data-plan-del="${esc(x.id)}">Sil</button></div>`).join(''):'<div class="empty">Henüz plan oluşturulmadı.</div>';
+ }
+ $('qbSave').onclick=()=>{const c=Number($('qbCorrect').value),w=Number($('qbWrong').value);if(!Number.isInteger(c)||!Number.isInteger(w)||c<0||w<0||c+w===0){alert('Geçerli doğru ve yanlış sayıları gir.');return}const a=read('questions');a.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2),date:$('qbDate').value||today(),subject:$('qbSubject').value,c,w});write('questions',a);$('qbCorrect').value=$('qbWrong').value=0;renderTrackers()};
+ $('planAdd').onclick=()=>{const task=$('planTask').value.trim();if(!task){alert('Çalışma hedefini yaz.');return}const a=read('planner');a.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2),date:$('planDate').value||today(),subject:$('planSubject').value,task,status:'todo'});write('planner',a);$('planTask').value='';renderTrackers()};
+ document.addEventListener('click',e=>{const b=e.target.closest('[data-qb-del],[data-plan-del]');if(!b)return;const type=b.dataset.qbDel?'questions':'planner',id=b.dataset.qbDel||b.dataset.planDel;if(confirm('Bu kayıt silinsin mi?')){write(type,read(type).filter(x=>x.id!==id));renderTrackers()}});
+ document.addEventListener('change',e=>{if(!e.target.matches('[data-plan-status]'))return;const a=read('planner'),x=a.find(v=>v.id===e.target.dataset.planStatus);if(x){x.status=e.target.value;write('planner',a);renderTrackers()}});
+ window.agsRenderTrackers=renderTrackers;
+ document.querySelectorAll('.nav-btn').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.view==='questions'||b.dataset.view==='planner')renderTrackers()}));
+ renderTrackers();
+})();
+</script>
 </body>
 </html>
