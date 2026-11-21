@@ -95,12 +95,39 @@ th{color:var(--muted);font-weight:600}
  .multi-branch summary{padding:12px 10px}
 }
 footer{text-align:center;color:#73859e;font-size:11px;padding:12px}
+
+/* Süreli deneme simülatörü */
+.sim-clock{font-size:clamp(38px,9vw,64px);font-weight:850;letter-spacing:2px;text-align:center;color:var(--green);font-variant-numeric:tabular-nums;margin:14px 0}
+.sim-clock.urgent{color:var(--red)}
+.sim-status{text-align:center;color:var(--muted);font-size:13px;min-height:20px}
+.sim-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.sim-actions button{flex:1;min-width:120px}
+.sim-hint{font-size:12px;color:var(--muted);line-height:1.5;margin-top:10px}
+
+/* AGS Akademi: responsive side navigation */
+.wrap{max-width:1320px;padding-left:238px;transition:padding .2s}
+.app-sidebar{position:fixed;z-index:40;left:0;top:0;bottom:0;width:220px;background:#101b2d;border-right:1px solid var(--line);padding:23px 12px;display:flex;flex-direction:column;gap:9px}
+.sidebar-logo{font-size:19px;font-weight:900;padding:12px 10px 23px;color:var(--green)}
+.sidebar-logo span{color:var(--txt)}
+.nav-btn{width:100%;text-align:left;background:transparent;color:#b8c9df;border:1px solid transparent;padding:14px 12px;border-radius:12px;font-size:13px}
+.nav-btn:hover{background:#1b2940}.nav-btn.active{background:#1c3b3b;color:var(--green);border-color:#315c54}
+.app-view{display:none}.app-view.active{display:block}
+.view-heading{margin:16px 0 10px;font-size:21px;font-weight:850}
+@media(max-width:760px){.wrap{padding:68px 12px 35px}.app-sidebar{right:0;bottom:auto;width:100%;height:60px;padding:7px 9px;flex-direction:row;align-items:center;gap:6px;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line)}.sidebar-logo{display:none}.nav-btn{width:auto;flex:1;min-width:max-content;text-align:center;padding:11px 10px;font-size:12px}.top{flex-wrap:wrap}.brand{font-size:20px}}
 </style>
 <link rel="manifest" href="./manifest.json">
 </head>
 <body>
+<nav class="app-sidebar" aria-label="Ana menü">
+ <div class="sidebar-logo">AGS <span>AKADEMİ</span></div>
+ <button class="nav-btn active" type="button" data-view="dashboard">▦  Ana Sayfa</button>
+ <button class="nav-btn" type="button" data-view="simulator">⏱  Deneme Simülatörü</button>
+ <button class="nav-btn" type="button" data-view="entry">✎  Deneme Kaydet</button>
+ <button class="nav-btn" type="button" data-view="history">▤  Deneme Geçmişi</button>
+</nav>
 <main class="wrap">
 
+<div class="app-view active" id="view-dashboard">
 <header class="top">
  <div>
   <div class="brand">AGS <span>AKADEMİ</span></div>
@@ -136,44 +163,6 @@ footer{text-align:center;color:#73859e;font-size:11px;padding:12px}
  <div class="notice">Net hesabı: Doğru − (Yanlış ÷ 4). Kayıtlar bu cihazdaki tarayıcıda saklanır.</div>
 </section>
 
-<section class="section">
- <h2>Yeni deneme kaydet</h2>
- <div class="row2">
-  <div>
-   <label for="examName">Deneme adı</label>
-   <input id="examName" maxlength="60" placeholder="Örn. Deneme 1">
-  </div>
-  <div>
-   <label for="examDate">Deneme tarihi</label>
-   <input class="date" id="examDate" type="date">
-  </div>
- </div>
- <div style="margin-top:12px">
-  <label for="examYear">Soru dağılımı</label>
-  <select id="examYear">
-   <option value="2026">2026 dağılımı</option>
-   <option value="2025">2025 dağılımı</option>
-  </select>
- </div>
- <div id="subjects"></div>
- <div class="metric" style="margin-top:12px">
-  <small>GİRİLEN DENEMENİN TOPLAM NETİ</small>
-  <strong id="liveTotal">0,00</strong>
-  <small id="totalQuestionLabel">80 soru üzerinden</small>
- </div>
- <div class="metric" style="margin-top:8px">
-  <small>TAHMİNİ ÇALIŞMA ENDEKSİ</small>
-  <strong id="liveScore">—</strong>
-  <small id="scoreSub">Alt test netlerini girince hesaplanır.</small>
- </div>
- <div id="motivation" class="insight">İlk denemeni kaydet, birlikte gelişimini takip edelim!</div>
- <div class="error" id="error"></div>
- <div class="actions">
-  <button id="save">＋ Denemeyi kaydet</button>
-  <button class="secondary" id="clear">Alanları temizle</button>
- </div>
- <div class="notice">Doğru/yanlış kutularındaki soluk “0” yer tutucudur. Sayı girmezsen 0 kabul edilir. Her branşta doğru + yanlış sayısı soru sayısını aşamaz.</div>
-</section>
 
 <section class="section">
  <h2>Gelişim grafikleri</h2>
@@ -226,7 +215,63 @@ footer{text-align:center;color:#73859e;font-size:11px;padding:12px}
  <div id="insights"><div class="empty">Denemelerini kaydet; güçlü ve gelişime açık branşlarını analiz edeyim.</div></div>
 </section>
 
-<section class="section">
+</div>
+<div class="app-view" id="view-simulator"><h1 class="view-heading">Süreli Deneme Simülatörü</h1><section class="section" id="simulator">
+ <h2>⏱️ Süreli deneme simülatörü</h2>
+ <div class="row2">
+  <div><label for="simName">Deneme adı</label><input id="simName" maxlength="60" placeholder="Örn. AGS Genel Deneme 3"></div>
+  <div><label for="simType">Sınav türü</label><select id="simType"><option value="AGS">AGS</option><option value="OABT">ÖABT</option><option value="KPSS-L">KPSS Lisans</option><option value="KPSS-ON">KPSS Ön Lisans</option><option value="KPSS-ORT">KPSS Ortaöğretim</option></select></div>
+ </div>
+ <div id="simFieldWrap" style="margin-top:10px;display:none"><label for="simField">ÖABT alanı</label><select id="simField"><option value="70">70 dakika: Türkçe, tarih, coğrafya, biyoloji, sosyal bilgiler, edebiyat, rehberlik, sınıf, okul öncesi, beden eğitimi, özel eğitim, din kültürü</option><option value="90">90 dakika: Matematik, ilköğretim matematik, fen bilimleri, fizik, kimya / kimya teknolojisi</option></select></div>
+ <div style="margin-top:10px"><label for="simMinutes">Süre (dakika, değiştirilebilir)</label><input id="simMinutes" type="number" min="1" max="600" step="1" inputmode="numeric" value="110"></div>
+ <div class="sim-clock" id="simClock" role="timer" aria-live="off">01:50:00</div>
+ <div class="sim-status" id="simStatus" role="status">Başlamak için deneme adı gir.</div>
+ <div class="sim-actions"><button id="simStart">▶ Başlat</button><button class="secondary" id="simPause" disabled>Duraklat</button><button class="secondary" id="simFinish" disabled>Bitir ve sonucu gir</button><button class="danger" id="simReset">Sıfırla</button></div>
+ <div class="sim-hint">Süreler 2026 ÖSYM/MEB açıklamalarına göre otomatik seçilir. ÖABT için alanını da seç. İstersen süreyi elle değiştirebilirsin. Süre dolduğunda sesli uyarı verilir. Sayaç cihaz saatini temel alır; sekme kapansa da aynı tarayıcıda kaldığı yerden hesaplanır. Sonuç girişinde mevcut AGS branş formu kullanılır; diğer sınavların branş formları sonraki aşamada eklenecek.</div>
+</section>
+
+</div>
+<div class="app-view" id="view-entry"><h1 class="view-heading">Deneme Sonucu Kaydet</h1><section class="section" id="examEntry">
+ <h2>Yeni deneme kaydet</h2>
+ <div class="row2">
+  <div>
+   <label for="examName">Deneme adı</label>
+   <input id="examName" maxlength="60" placeholder="Örn. Deneme 1">
+  </div>
+  <div>
+   <label for="examDate">Deneme tarihi</label>
+   <input class="date" id="examDate" type="date">
+  </div>
+ </div>
+ <div style="margin-top:12px">
+  <label for="examYear">Soru dağılımı</label>
+  <select id="examYear">
+   <option value="2026">2026 dağılımı</option>
+   <option value="2025">2025 dağılımı</option>
+  </select>
+ </div>
+ <div id="subjects"></div>
+ <div class="metric" style="margin-top:12px">
+  <small>GİRİLEN DENEMENİN TOPLAM NETİ</small>
+  <strong id="liveTotal">0,00</strong>
+  <small id="totalQuestionLabel">80 soru üzerinden</small>
+ </div>
+ <div class="metric" style="margin-top:8px">
+  <small>TAHMİNİ ÇALIŞMA ENDEKSİ</small>
+  <strong id="liveScore">—</strong>
+  <small id="scoreSub">Alt test netlerini girince hesaplanır.</small>
+ </div>
+ <div id="motivation" class="insight">İlk denemeni kaydet, birlikte gelişimini takip edelim!</div>
+ <div class="error" id="error"></div>
+ <div class="actions">
+  <button id="save">＋ Denemeyi kaydet</button>
+  <button class="secondary" id="clear">Alanları temizle</button>
+ </div>
+ <div class="notice">Doğru/yanlış kutularındaki soluk “0” yer tutucudur. Sayı girmezsen 0 kabul edilir. Her branşta doğru + yanlış sayısı soru sayısını aşamaz.</div>
+</section>
+
+</div>
+<div class="app-view" id="view-history"><h1 class="view-heading">Deneme Geçmişi</h1><section class="section">
  <h2>Deneme geçmişi</h2>
  <div id="history"><div class="empty">Henüz kayıt yok.</div></div>
  <div class="actions">
@@ -235,6 +280,7 @@ footer{text-align:center;color:#73859e;font-size:11px;padding:12px}
  </div>
 </section>
 
+</div>
 <footer>AGS Akademi · Veriler cihazında saklanır. Tarayıcı verilerini silersen kayıtlar da silinebilir.</footer>
 </main>
 
@@ -1227,6 +1273,71 @@ supabase.auth.onAuthStateChange((event, session) => {
 });
 
 await updateUI();
+})();
+</script>
+
+<script>
+(function(){
+ const views=['dashboard','simulator','entry','history'];
+ window.agsNavigate=function(view){
+  if(!views.includes(view))view='dashboard';
+  document.querySelectorAll('.app-view').forEach(el=>el.classList.toggle('active',el.id==='view-'+view));
+  document.querySelectorAll('.nav-btn').forEach(el=>{const on=el.dataset.view===view;el.classList.toggle('active',on);el.setAttribute('aria-current',on?'page':'false')});
+  try{sessionStorage.setItem('agsActiveView',view)}catch(e){}
+  window.scrollTo({top:0,behavior:'instant'});
+ };
+ document.querySelectorAll('.nav-btn').forEach(el=>el.addEventListener('click',()=>window.agsNavigate(el.dataset.view)));
+ let initial='dashboard';try{initial=sessionStorage.getItem('agsActiveView')||'dashboard'}catch(e){}
+ window.agsNavigate(initial);
+})();
+</script>
+<script>
+/* AGS Akademi: süreli deneme, bağımsız modül */
+(function(){
+ const byId=id=>document.getElementById(id);
+ const KEY='agsAkademiSimulator_v1';
+ const presets={'AGS':110,'OABT':70,'KPSS-L':130,'KPSS-ON':130,'KPSS-ORT':130};
+ let state=null, interval=null;
+ const type=byId('simType'), mins=byId('simMinutes'), name=byId('simName'), field=byId('simField'), fieldWrap=byId('simFieldWrap');
+ const start=byId('simStart'), pause=byId('simPause'), finish=byId('simFinish'), reset=byId('simReset');
+ const clock=byId('simClock'), status=byId('simStatus');
+ function read(){try{const x=JSON.parse(localStorage.getItem(KEY)||'null');return x&&typeof x==='object'?x:null}catch(e){return null}}
+ function store(){try{if(state)localStorage.setItem(KEY,JSON.stringify(state));else localStorage.removeItem(KEY)}catch(e){status.textContent='Sayaç bu tarayıcıda saklanamadı.'}}
+ function remaining(){return !state?Math.round(Number(mins.value||0)*60):state.running?Math.max(0,Math.ceil((state.deadline-Date.now())/1000)):Math.max(0,state.remaining)}
+ function format(seconds){const h=Math.floor(seconds/3600),m=Math.floor(seconds%3600/60),s=seconds%60;return [h,m,s].map(x=>String(x).padStart(2,'0')).join(':')}
+ function beep(){try{const C=window.AudioContext||window.webkitAudioContext;if(!C)return;const ctx=new C();ctx.resume();[0,.3,.6].forEach(t=>{const o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.value=880;o.connect(g);g.connect(ctx.destination);g.gain.setValueAtTime(.0001,ctx.currentTime+t);g.gain.exponentialRampToValueAtTime(.18,ctx.currentTime+t+.03);g.gain.exponentialRampToValueAtTime(.0001,ctx.currentTime+t+.23);o.start(ctx.currentTime+t);o.stop(ctx.currentTime+t+.24)});setTimeout(()=>ctx.close(),1500)}catch(e){}}
+ function tick(){
+  if(state&&state.running&&remaining()===0){state.running=false;state.remaining=0;state.finished=true;store();beep();if('Notification'in window&&Notification.permission==='granted')new Notification('AGS Akademi',{body:'Deneme süren doldu!'});}
+  const left=remaining();clock.textContent=format(left);clock.classList.toggle('urgent',!!state&&left<=300);
+  if(!state)status.textContent='Başlamak için deneme adı gir.';
+  else if(state.finished)status.textContent='⏰ Süre doldu! Sonucunu girebilirsin.';
+  else if(state.running)status.textContent=state.type+' · '+state.name+' · Sınav devam ediyor';
+  else status.textContent='⏸ Deneme duraklatıldı.';
+  const active=!!state;
+  name.disabled=type.disabled=mins.disabled=field.disabled=active;
+  fieldWrap.style.display=type.value==='OABT'?'block':'none';
+  start.disabled=active&&state.running||active&&state.finished;
+  start.textContent=active?'▶ Devam et':'▶ Başlat';
+  pause.disabled=!active||!state.running;
+  finish.disabled=!active;
+ }
+ type.addEventListener('change',()=>{if(!state){mins.value=type.value==='OABT'?Number(field.value):presets[type.value];tick()}});
+ field.addEventListener('change',()=>{if(!state){mins.value=Number(field.value);tick()}});
+ mins.addEventListener('input',tick);
+ start.addEventListener('click',()=>{
+  if(!state){const n=name.value.trim(),m=Number(mins.value);if(!n){alert('Önce deneme adını gir.');name.focus();return}if(!Number.isInteger(m)||m<1||m>600){alert('Süre 1 ile 600 dakika arasında olmalı.');return}state={name:n,type:type.value,field:field.value,remaining:m*60,running:false,finished:false,deadline:0};}
+  state.deadline=Date.now()+state.remaining*1000;state.running=true;store();tick();
+  if('Notification'in window&&Notification.permission==='default')Notification.requestPermission().catch(()=>{});
+ });
+ pause.addEventListener('click',()=>{if(!state)return;state.remaining=remaining();state.running=false;store();tick()});
+ finish.addEventListener('click',()=>{if(!state)return;const r=remaining();if(state.running&&r>0&&!confirm('Süre henüz bitmedi. Denemeyi bitirip sonuç girişine geçilsin mi?'))return;
+  const finishedName=state.name,finishedType=state.type;state=null;store();tick();
+  if(finishedType==='AGS'){byId('examName').value=finishedName;byId('examDate').value=new Date().toLocaleDateString('en-CA');window.agsNavigate('entry');byId('examName').focus({preventScroll:true});}
+  else {alert(finishedType+' denemesi tamamlandı. Bu sınavın branşlara özel sonuç giriş formu sonraki aşamada eklenecek.');}
+ });
+ reset.addEventListener('click',()=>{if(state&&!confirm('Aktif deneme sıfırlansın mı?'))return;state=null;store();tick()});
+ state=read();if(state){name.value=state.name||'';type.value=state.type in presets?state.type:'AGS';if(state.type==='OABT')field.value=state.field||String(state.remaining===5400?90:70);mins.value=Math.max(1,Math.ceil((state.remaining||0)/60));}
+ tick();interval=setInterval(tick,1000);
 })();
 </script>
 
