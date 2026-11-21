@@ -1,0 +1,1234 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101827">
+<title>AGS Akademi</title>
+<style>
+:root{--bg:#0b1220;--panel:#131e30;--panel2:#1b2940;--line:#2a3a53;--txt:#f4f7fb;--muted:#9aabc1;--green:#45d6a0;--red:#ff7585;--blue:#79a9ff;--gold:#f4c76b}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(160deg,#101b2d,#080e19 65%);color:var(--txt);font:15px system-ui,-apple-system,Segoe UI,sans-serif;padding:0 0 40px}
+.wrap{max-width:920px;margin:auto;padding:18px 15px 40px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:8px 0 20px}
+.brand{font-size:23px;font-weight:850;letter-spacing:.5px}
+.brand span{color:var(--green)}
+.sub{color:var(--muted);font-size:12px;margin-top:3px}
+.pill{border:1px solid #315c54;color:var(--green);border-radius:30px;padding:7px 10px;font-size:11px;font-weight:700}
+h2{font-size:18px;margin:0 0 13px}
+.section{background:rgba(19,30,48,.96);border:1px solid var(--line);border-radius:19px;padding:16px;margin:14px 0;box-shadow:0 12px 30px #0002}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.metric{background:var(--panel2);padding:13px;border-radius:14px;min-width:0}
+.metric small{display:block;color:var(--muted);font-size:11px}
+.metric strong{display:block;font-size:23px;margin-top:4px;font-variant-numeric:tabular-nums}
+.featured-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}.featured-card{background:#17243a;border:1px solid #344761;border-radius:14px;padding:14px;min-width:0}.featured-card.best{border-color:#876d35}.featured-card.latest{border-color:#315c54}.featured-label{font-size:12px;font-weight:800;color:#f4c76b}.featured-card.latest .featured-label{color:#45d6a0}.featured-name{font-weight:750;margin-top:9px;overflow-wrap:anywhere}.featured-meta{font-size:12px;color:#9aabc1;margin-top:5px}.featured-net{font-size:25px;font-weight:850;margin-top:10px}.featured-net small{font-size:12px;font-weight:500;color:#9aabc1}@media(max-width:540px){.featured-grid{grid-template-columns:1fr}}
+label{display:block;color:var(--muted);font-size:12px;margin:0 0 6px}
+input,select{width:100%;background:#0d1727;color:var(--txt);border:1px solid #344761;border-radius:11px;padding:12px;font-size:15px;outline:none}
+input:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 3px #79a9ff20}
+input::placeholder{color:#687b95;opacity:.65}
+input[type=number]{appearance:textfield;-moz-appearance:textfield}
+input::-webkit-inner-spin-button,input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.date{max-width:240px}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.subject{padding:12px;background:#17243a;border:1px solid #2b3d56;border-radius:14px;margin:10px 0}
+.subjecthead{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:9px;font-weight:700}
+.count{color:var(--muted);font-size:11px;font-weight:500}
+.netline{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;margin-top:8px}
+.netline b{color:var(--green);font-size:14px}
+button{border:0;border-radius:12px;padding:13px 15px;font-size:14px;font-weight:750;cursor:pointer;background:var(--green);color:#06251b}
+button.secondary{background:#253650;color:var(--txt);border:1px solid #3a506d}
+button.danger{background:#492936;color:#ffd9df}
+button:disabled{opacity:.4;cursor:not-allowed}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.actions button{flex:1}
+.notice{color:var(--muted);font-size:11px;line-height:1.55;margin-top:10px}
+.error{color:var(--red);font-size:12px;margin-top:9px;min-height:16px}
+.success{color:var(--green)}
+.chartbox{background:#101a2b;border-radius:14px;padding:10px;margin:10px 0}
+.charttitle{font-size:13px;font-weight:700;margin:4px 4px 8px}
+.chart{width:100%;height:auto;display:block;overflow:visible}
+.legend{color:var(--muted);font-size:11px;margin-top:8px;display:flex;flex-wrap:wrap;gap:8px 14px}
+.legend-item{display:inline-flex;align-items:center;gap:5px}
+.legend-dot{display:inline-block;width:9px;height:9px;border-radius:3px;flex:0 0 9px}
+table{width:100%;border-collapse:collapse;font-size:12px;min-width:530px}
+th,td{text-align:left;padding:10px 6px;border-bottom:1px solid #2a3a53}
+th{color:var(--muted);font-weight:600}
+.insight{background:#172b35;border:1px solid #285446;border-radius:13px;padding:12px;margin:8px 0;font-size:13px;line-height:1.5}
+.insight.warn{background:#30252b;border-color:#68404b}
+.empty{color:var(--muted);font-size:13px;text-align:center;padding:20px 8px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.scroll{overflow-x:auto}
+.history-item{background:#17243a;border:1px solid #2b3d56;border-radius:12px;padding:11px;margin:9px 0}
+.history-top{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.history-name{font-weight:750}
+.history-meta{color:var(--muted);font-size:11px;margin-top:4px}
+.history-detail{margin-top:10px}
+.history-detail summary{cursor:pointer;color:#b9c9df;font-size:12px}
+.branch-list{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px}
+.branch-chip{background:#101a2b;padding:8px;border-radius:9px;font-size:11px;display:flex;justify-content:space-between;gap:8px}
+.checkgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:10px 0}
+.checkline{display:flex;align-items:center;gap:8px;background:#17243a;padding:9px;border-radius:10px;font-size:12px}
+.checkline input{width:auto;accent-color:var(--green)}
+.diff-positive{color:var(--green)}
+.diff-negative{color:var(--red)}
+.diff-neutral{color:var(--muted)}
+.download{background:#253650;color:#eaf1fc;border:1px solid #3a506d;padding:8px 11px;font-size:11px;margin:5px 0}
+.multi-branch{background:#17243a;border:1px solid #2b3d56;border-radius:13px;margin:9px 0;overflow:hidden}
+.multi-branch summary{list-style:none;cursor:pointer;padding:13px;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:13px;font-weight:750}
+.multi-branch summary::-webkit-details-marker{display:none}
+.multi-branch summary:after{content:"＋";color:var(--green);font-size:18px}
+.multi-branch[open] summary:after{content:"−"}
+.multi-branch summary:hover{background:#1d2d45}
+.branch-summary-info{color:var(--muted);font-size:11px;font-weight:500}
+.multi-branch-content{padding:0 10px 10px}
+.multi-branch-content .chartbox{margin:0}
+.multi-export{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.multi-export .download{margin:0}
+@media(max-width:540px){
+ .grid{grid-template-columns:repeat(3,1fr)}
+ .metric strong{font-size:19px}
+ .wrap{padding-left:12px;padding-right:12px}
+ .section{padding:13px}
+ .row2{grid-template-columns:1fr}
+ .branch-list{grid-template-columns:1fr}
+ .pill{font-size:10px}
+ .multi-branch summary{padding:12px 10px}
+}
+footer{text-align:center;color:#73859e;font-size:11px;padding:12px}
+</style>
+<link rel="manifest" href="./manifest.json">
+</head>
+<body>
+<main class="wrap">
+
+<header class="top">
+ <div>
+  <div class="brand">AGS <span>AKADEMİ</span></div>
+  <div class="sub">Kişisel deneme ve başarı takip sistemi</div>
+ </div>
+ <div id="ags-user-name" style="display:none;color:#45d6a0;font-size:19px;font-weight:900;letter-spacing:1px;text-shadow:0 0 12px #45d6a055"></div>
+ <div class="pill">80 SORU · 6 BRANŞ</div>
+</header>
+
+
+
+<div id="ags-auth" style="max-width:360px;margin:12px 0 20px 0;padding:16px;background:#131e30;border:1px solid #2a3b55;border-radius:16px;color:white;font-family:Arial">
+  <h2>AGS Akademi Hesabı</h2>
+  <p id="ags-auth-message">Verilerini hesabında saklamak için giriş yap veya hesap oluştur.</p>
+  <input id="ags-name" type="text" placeholder="Adın" style="width:100%;padding:12px;margin:8px 0;box-sizing:border-box">
+  <input id="ags-email" type="email" placeholder="E-posta adresin" style="width:100%;padding:12px;margin:8px 0;box-sizing:border-box">
+  <input id="ags-password" type="password" placeholder="Şifren" style="width:100%;padding:12px;margin:8px 0;box-sizing:border-box">
+
+  <button id="ags-signup" style="padding:12px;margin:5px">Hesap oluştur</button>
+  <button id="ags-login" style="padding:12px;margin:5px">Giriş yap</button>
+  <button id="ags-logout" style="padding:12px;margin:5px;display:none">Çıkış yap</button>
+  <button id="ags-guest" style="padding:12px;margin:5px">Misafir olarak devam et</button>
+</div>
+
+<section class="section">
+ <h2>Genel başarı paneli</h2>
+ <div class="grid">
+  <div class="metric"><small>Deneme sayısı</small><strong id="mCount">0</strong></div>
+  <div class="metric"><small>Son toplam net</small><strong id="mNet">—</strong></div>
+  <div class="metric"><small>Son çalışma endeksi</small><strong id="mScore">—</strong></div>
+ </div>
+ <div class="featured-grid" aria-live="polite"><div class="featured-card best" id="bestExamCard"></div><div class="featured-card latest" id="latestExamCard"></div></div>
+ <div class="notice">Net hesabı: Doğru − (Yanlış ÷ 4). Kayıtlar bu cihazdaki tarayıcıda saklanır.</div>
+</section>
+
+<section class="section">
+ <h2>Yeni deneme kaydet</h2>
+ <div class="row2">
+  <div>
+   <label for="examName">Deneme adı</label>
+   <input id="examName" maxlength="60" placeholder="Örn. Deneme 1">
+  </div>
+  <div>
+   <label for="examDate">Deneme tarihi</label>
+   <input class="date" id="examDate" type="date">
+  </div>
+ </div>
+ <div style="margin-top:12px">
+  <label for="examYear">Soru dağılımı</label>
+  <select id="examYear">
+   <option value="2026">2026 dağılımı</option>
+   <option value="2025">2025 dağılımı</option>
+  </select>
+ </div>
+ <div id="subjects"></div>
+ <div class="metric" style="margin-top:12px">
+  <small>GİRİLEN DENEMENİN TOPLAM NETİ</small>
+  <strong id="liveTotal">0,00</strong>
+  <small id="totalQuestionLabel">80 soru üzerinden</small>
+ </div>
+ <div class="metric" style="margin-top:8px">
+  <small>TAHMİNİ ÇALIŞMA ENDEKSİ</small>
+  <strong id="liveScore">—</strong>
+  <small id="scoreSub">Alt test netlerini girince hesaplanır.</small>
+ </div>
+ <div id="motivation" class="insight">İlk denemeni kaydet, birlikte gelişimini takip edelim!</div>
+ <div class="error" id="error"></div>
+ <div class="actions">
+  <button id="save">＋ Denemeyi kaydet</button>
+  <button class="secondary" id="clear">Alanları temizle</button>
+ </div>
+ <div class="notice">Doğru/yanlış kutularındaki soluk “0” yer tutucudur. Sayı girmezsen 0 kabul edilir. Her branşta doğru + yanlış sayısı soru sayısını aşamaz.</div>
+</section>
+
+<section class="section">
+ <h2>Gelişim grafikleri</h2>
+ <div class="chartbox">
+  <div class="charttitle">Bütün denemelerin toplam net değişimi</div>
+  <div id="netChart" class="empty">İlk denemeni kaydettiğinde grafik burada oluşacak.</div>
+  <button class="download" data-export="netChart">PNG olarak indir</button>
+ </div>
+ <div class="chartbox">
+  <div class="charttitle">Bütün denemelerin çalışma endeksi</div>
+  <div id="scoreChart" class="empty">Henüz puan verisi yok.</div>
+  <button class="download" data-export="scoreChart">PNG olarak indir</button>
+ </div>
+ <div class="chartbox">
+  <div class="charttitle">Branş bazlı genel ortalama netlerin</div>
+  <div id="averageChart" class="empty">Henüz branş verisi yok.</div>
+  <button class="download" data-export="averageChart">PNG olarak indir</button>
+ </div>
+</section>
+
+<section class="section">
+ <h2>Deneme karşılaştırma</h2>
+ <div class="row2">
+  <div>
+   <label for="compareA">Birinci deneme</label>
+   <select id="compareA"><option value="">Deneme seç</option></select>
+  </div>
+  <div>
+   <label for="compareB">İkinci deneme</label>
+   <select id="compareB"><option value="">Deneme seç</option></select>
+  </div>
+ </div>
+ <div id="compareResult"><div class="empty">İki deneme seçtiğinde branşları yan yana karşılaştıracağım.</div></div>
+</section>
+
+<section class="section">
+ <h2>Çoklu deneme analizi</h2>
+ <div class="notice">İstediğin denemeleri seçebilir veya hepsini tek seferde analize dahil edebilirsin. Seçilen denemeler aynı grafikte farklı renklerle karşılaştırılır.</div>
+ <div class="actions">
+  <button class="secondary" id="selectAll">Tümünü seç</button>
+  <button class="secondary" id="selectNone">Seçimi temizle</button>
+ </div>
+ <div id="multiChecks" class="checkgrid"><div class="empty">Önce deneme kaydet.</div></div>
+ <div id="multiResult"><div class="empty">Seçtiğin denemelerin genel analizi burada görünecek.</div></div>
+ <button class="download" data-export="multiChart">Toplam net grafiğini PNG indir</button>
+</section>
+
+<section class="section">
+ <h2>Akıllı değerlendirme</h2>
+ <div id="insights"><div class="empty">Denemelerini kaydet; güçlü ve gelişime açık branşlarını analiz edeyim.</div></div>
+</section>
+
+<section class="section">
+ <h2>Deneme geçmişi</h2>
+ <div id="history"><div class="empty">Henüz kayıt yok.</div></div>
+ <div class="actions">
+  <button class="secondary" id="export">CSV dışa aktar</button>
+  <button class="danger" id="deleteAll">Tüm kayıtları sil</button>
+ </div>
+</section>
+
+<footer>AGS Akademi · Veriler cihazında saklanır. Tarayıcı verilerini silersen kayıtlar da silinebilir.</footer>
+</main>
+
+<script>
+const subjectTemplates=[
+ {id:'verbal',name:'Sözel Yetenek',q26:15,q25:15,w:20},
+ {id:'numeric',name:'Sayısal Yetenek',q26:15,q25:15,w:20},
+ {id:'history',name:'Tarih',q26:6,q25:10,w:15},
+ {id:'geo',name:'Türkiye Coğrafyası',q26:6,q25:8,w:10},
+ {id:'education',name:'Eğitim Bilimleri ve Türk Millî Eğitim Sistemi',q26:30,q25:24,w:25},
+ {id:'law',name:'Mevzuat',q26:8,q25:8,w:10}
+];
+
+const $=id=>document.getElementById(id);
+const fmt=n=>Number(n||0).toFixed(2).replace('.',',');
+const safe=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+const examColors=[
+ '#79a9ff',
+ '#45d6a0',
+ '#ff7585',
+ '#f4c76b',
+ '#b99aff',
+ '#ff9f6e',
+ '#63d4df',
+ '#e58ac5',
+ '#a8d878',
+ '#c1c9d8'
+];
+
+let subjects=[];
+let records=[];
+
+try{
+ const old=JSON.parse(localStorage.getItem('agsAkademiRecords')||'[]');
+ records=Array.isArray(old)?old:[];
+}catch(e){records=[]}
+
+records=records.map((r,i)=>({
+ ...r,
+ id:r.id||('old-'+i+'-'+r.date),
+ name:r.name||('Deneme '+(i+1)),
+ year:String(r.year||'2026'),
+ parts:r.parts||{},
+ raw:r.raw||{},
+ score:Number.isFinite(Number(r.score))?Number(r.score):null
+}));
+
+window.agsLoadUserRecords = function(user){
+  window.agsCurrentUserId = user ? user.id : null;
+
+  const key = user
+    ? 'agsAkademiRecords_user_' + user.id
+    : 'agsAkademiRecords';
+
+  try {
+    const saved = JSON.parse(localStorage.getItem(key) || '[]');
+    records = Array.isArray(saved) ? saved : [];
+  } catch(e) {
+    records = [];
+  }
+
+  records = records.map((r,i)=>({
+    ...r,
+    id:r.id || ('old-'+i+'-'+r.date),
+    name:r.name || ('Deneme '+(i+1)),
+    year:String(r.year || '2026'),
+    parts:r.parts || {},
+    raw:r.raw || {},
+    score:Number.isFinite(Number(r.score)) ? Number(r.score) : null
+  }));
+
+  render();
+};
+
+if (Object.prototype.hasOwnProperty.call(window, 'agsPendingAuthUser')) {
+  window.agsLoadUserRecords(window.agsPendingAuthUser);
+  delete window.agsPendingAuthUser;
+}
+
+function localDate(){
+ const d=new Date();
+ return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');
+}
+
+$('examDate').value=localDate();
+
+function setSubjects(){
+ const year=$('examYear').value;
+ subjects=subjectTemplates.map(s=>({...s,q:year==='2025'?s.q25:s.q26}));
+ $('totalQuestionLabel').textContent=subjects.reduce((a,s)=>a+s.q,0)+' soru üzerinden';
+ makeInputs();
+ updateLive();
+}
+
+function makeInputs(){
+ $('subjects').innerHTML=subjects.map(s=>`
+  <div class="subject">
+   <div class="subjecthead">
+    <span>${s.name}</span>
+    <span class="count">${s.q} soru · %${s.w} ağırlık</span>
+   </div>
+   <div class="fields">
+    <div><label>Doğru</label><input class="score" id="${s.id}C" type="number" min="0" max="${s.q}" step="1" inputmode="numeric" placeholder="0"></div>
+    <div><label>Yanlış</label><input class="score" id="${s.id}W" type="number" min="0" max="${s.q}" step="1" inputmode="numeric" placeholder="0"></div>
+   </div>
+   <div class="netline">
+    <span>Boş: <b id="${s.id}B" style="color:#9aabc1">${s.q}</b></span>
+    <span>Net: <b id="${s.id}N">0,00</b></span>
+   </div>
+  </div>
+ `).join('');
+
+ document.querySelectorAll('.score').forEach(i=>i.addEventListener('input',updateLive));
+}
+
+function val(id){return Number($(id).value||0)}
+
+function calc(){
+ let total=0,ok=true,parts={},raw={};
+
+ for(const s of subjects){
+  const ci=$(s.id+'C'),wi=$(s.id+'W');
+  const c=val(s.id+'C'),w=val(s.id+'W');
+
+  if((ci.value!==''&&(!Number.isInteger(c)||c<0))||
+     (wi.value!==''&&(!Number.isInteger(w)||w<0))||c+w>s.q)ok=false;
+
+  const n=c-w/4;
+  parts[s.id]=n;
+  raw[s.id]={c,w};
+  total+=n;
+
+  $(s.id+'B').textContent=s.q-c-w;
+  $(s.id+'N').textContent=fmt(n);
+
+  ci.style.borderColor=(c+w>s.q||c<0||!Number.isInteger(c))?'var(--red)':'';
+  wi.style.borderColor=(c+w>s.q||w<0||!Number.isInteger(w))?'var(--red)':'';
+ }
+
+ return {total,parts,raw,ok};
+}
+
+/* Kişisel çalışma endeksi: resmî ÖSYM puanı değildir. */
+function estimateIndex(parts,year){
+ const list=subjectTemplates.map(s=>({...s,q:year==='2025'?s.q25:s.q26}));
+
+ return list.reduce((sum,s)=>{
+  const rate=Math.max(0,Math.min(1,Number(parts[s.id]||0)/s.q));
+  return sum+rate*s.w;
+ },0);
+}
+
+function motivation(net){
+ if(net>=80)return ['Şampiyonsun!','Şampiyonsun, emeğin taçlandı!'];
+ if(net>=70)return ['Başarılı!','İşte aradığımız performans! Bu disiplinle devam et, başarı artık çok yakın!'];
+ if(net>=60)return ['Süper gidiyorsun!','Hedefe yaklaşıyorsun. İstikrarını bozma, zirve göründü!'];
+ if(net>=50)return ['Gazı aç!','İşte bu! Emeklerinin karşılığı gelmeye başladı. Şimdi vitesi yükselt!'];
+ if(net>=40)return ['Toparlanıyoruz','Güzel, temel oluşuyor. Eksiklerini kapat, daha iyisini yapabilirsin!'];
+ return ['Azim zamanı','Henüz yolun başındasın. Her büyük başarı küçük adımlarla başlar. Pes etmek yok!'];
+}
+
+function updateLive(){
+ const x=calc();
+
+ $('liveTotal').textContent=fmt(x.total);
+ $('error').textContent=x.ok?'':'Sayıları kontrol et: doğru + yanlış sayısı branş soru sayısını aşamaz; negatif veya ondalıklı sayı kullanma.';
+
+ $('liveScore').textContent=x.ok?fmt(estimateIndex(x.parts,$('examYear').value)):'—';
+ $('scoreSub').textContent='0–100 kişisel çalışma endeksi. Resmî ÖSYM P1 puanı değildir.';
+
+ const m=motivation(x.total);
+ $('motivation').innerHTML='<b>'+m[0]+'</b><br>'+m[1];
+}
+
+function persist(){
+ const key = window.agsCurrentUserId
+   ? 'agsAkademiRecords_user_' + window.agsCurrentUserId
+   : 'agsAkademiRecords';
+
+ localStorage.setItem(key, JSON.stringify(records));
+}
+
+async function syncExamToCloud(record){
+  if(!window.agsCurrentUserId) return;
+
+  const { error } = await agsSupabase
+    .from('exams')
+    .insert({
+      user_id: window.agsCurrentUserId,
+      name: record.name,
+      exam_date: record.date,
+      year: record.year,
+      total: record.total,
+      parts: record.parts,
+      raw: record.raw,
+      score: record.score,
+      exam_data: record
+    });
+
+  if(error){
+    console.error('Bulut kayıt hatası:', error.message);
+    $('error').textContent = 'Cihazına kaydedildi ancak buluta aktarılamadı: ' + error.message;
+  }
+}
+
+async function deleteExamFromCloud(recordId){
+  if(!window.agsCurrentUserId) return;
+
+  const { error } = await agsSupabase
+    .from('exams')
+    .delete()
+    .eq('user_id', window.agsCurrentUserId)
+    .eq('exam_data->>id', recordId);
+
+  if(error){
+    console.error('Bulut silme hatası:', error.message);
+  }
+}
+
+function save(){
+ const x=calc();
+ const date=$('examDate').value;
+ const name=$('examName').value.trim();
+ const year=$('examYear').value;
+
+ if(!name){
+  $('error').textContent='Lütfen denemeye bir ad ver.';
+  $('examName').focus();
+  return;
+ }
+
+ if(!date){
+  $('error').textContent='Lütfen deneme tarihi seç.';
+  return;
+ }
+
+ if(!x.ok){
+  $('error').textContent='Branşlardaki doğru/yanlış sayılarını kontrol et.';
+  return;
+ }
+
+ const r={
+  id:'e'+Date.now()+'-'+Math.random().toString(36).slice(2,7),
+  name,date,year,total:x.total,parts:x.parts,raw:x.raw,
+  score:estimateIndex(x.parts,year),
+  createdAt:new Date().toISOString()
+ };
+
+ records.push(r);
+ records.sort((a,b)=>a.date.localeCompare(b.date)||(a.createdAt||'').localeCompare(b.createdAt||''));
+
+ persist();
+ render();
+
+if(window.agsCurrentUserId){
+  syncExamToCloud(r);
+}
+
+ $('examName').value='';
+ document.querySelectorAll('.score').forEach(i=>{i.value='';i.style.borderColor='';});
+ updateLive();
+
+ $('error').textContent='Deneme kaydedildi! Geçmişe ve analizlere eklendi.';
+ $('error').classList.add('success');
+}
+
+function svgBars(data,labels,color='#45d6a0'){
+ if(!data.length)return '';
+
+ const W=680,H=230,L=48,R=12,T=18,B=48;
+ const inner=H-T-B;
+ const max=Math.max(1,...data.map(v=>Math.max(0,v)))*1.15;
+
+ const bars=data.map((v,i)=>{
+  const bw=Math.min(42,(W-L-R)/data.length*.55);
+  const x=L+(i+.5)*(W-L-R)/data.length-bw/2;
+  const h=Math.max(1,Math.max(0,v)/max*inner);
+  const y=T+inner-h;
+
+  return `<rect x="${x}" y="${y}" width="${bw}" height="${h}" rx="5" fill="${color}"/>
+   <text x="${x+bw/2}" y="${Math.max(11,y-5)}" text-anchor="middle" fill="#e8eff8" font-size="11">${fmt(v)}</text>
+   <text x="${x+bw/2}" y="${H-18}" text-anchor="middle" fill="#9aabc1" font-size="10">${safe(labels[i])}</text>`;
+ }).join('');
+
+ const grid=[0,.25,.5,.75,1].map(t=>{
+  const y=T+inner*(1-t);
+  return `<line x1="${L}" x2="${W-R}" y1="${y}" y2="${y}" stroke="#2a3a53"/>
+   <text x="${L-7}" y="${y+4}" text-anchor="end" fill="#8294ad" font-size="10">${fmt(max*t)}</text>`;
+ }).join('');
+
+ return `<svg class="chart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}">${grid}${bars}</svg>`;
+}
+
+/* Çoklu deneme grafiği: her deneme kendi renginde gösterilir. */
+function multiSeriesChart(items,valueGetter){
+ if(!items.length)return '';
+
+ const W=760,H=290,L=48,R=16,T=22,B=62;
+ const inner=H-T-B;
+ const values=items.map(valueGetter);
+ const max=Math.max(1,...values.map(v=>Math.max(0,v)))*1.18;
+ const slot=(W-L-R)/items.length;
+ const bw=Math.min(52,slot*.58);
+
+ let out='';
+
+ for(let i=0;i<items.length;i++){
+  const v=values[i];
+  const color=examColors[i%examColors.length];
+  const x=L+i*slot+(slot-bw)/2;
+  const h=Math.max(1,Math.max(0,v)/max*inner);
+  const y=T+inner-h;
+
+  out+=`
+   <rect x="${x}" y="${y}" width="${bw}" height="${h}" rx="6" fill="${color}"/>
+   <text x="${x+bw/2}" y="${Math.max(13,y-7)}" text-anchor="middle" fill="#f4f7fb" font-size="11">${fmt(v)}</text>
+   <text x="${x+bw/2}" y="${H-24}" text-anchor="middle" fill="#c1cde0" font-size="10">${safe(items[i].name.length>12?items[i].name.slice(0,11)+'…':items[i].name)}</text>
+  `;
+ }
+
+ for(let t=0;t<=1;t+=.25){
+  const y=T+inner*(1-t);
+  out+=`
+   <line x1="${L}" x2="${W-R}" y1="${y}" y2="${y}" stroke="#2a3a53"/>
+   <text x="${L-7}" y="${y+4}" text-anchor="end" fill="#8294ad" font-size="10">${fmt(max*t)}</text>
+  `;
+ }
+
+ const legend=items.map((r,i)=>`
+  <span class="legend-item">
+   <i class="legend-dot" style="background:${examColors[i%examColors.length]}"></i>
+   ${safe(r.name)}
+  </span>
+ `).join('');
+
+ return `
+  <svg class="chart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}">${out}</svg>
+  <div class="legend">${legend}</div>
+ `;
+}
+
+function groupedChart(a,b){
+ const W=700,H=280,L=48,R=12,T=22,B=82;
+ const inner=H-T-B;
+ const max=Math.max(1,...subjects.flatMap(s=>[a.parts[s.id]||0,b.parts[s.id]||0]))*1.18;
+ const slot=(W-L-R)/subjects.length;
+ const bw=Math.min(27,slot*.28);
+
+ let out='';
+
+ for(let i=0;i<subjects.length;i++){
+  const s=subjects[i];
+  const vals=[a.parts[s.id]||0,b.parts[s.id]||0];
+
+  vals.forEach((v,j)=>{
+   const x=L+i*slot+slot/2+(j===0?-bw-2:2);
+   const h=Math.max(1,Math.max(0,v)/max*inner);
+   const y=T+inner-h;
+
+   out+=`<rect x="${x}" y="${y}" width="${bw}" height="${h}" rx="4" fill="${j===0?'#79a9ff':'#45d6a0'}"/>
+    <text x="${x+bw/2}" y="${Math.max(12,y-5)}" text-anchor="middle" fill="#e8eff8" font-size="10">${fmt(v)}</text>`;
+  });
+
+  out+=`<text x="${L+i*slot+slot/2}" y="${H-45}" text-anchor="middle" fill="#aebdd1" font-size="10">${safe(s.name.length>19?s.name.slice(0,18)+'…':s.name)}</text>`;
+ }
+
+ for(let t=0;t<=1;t+=.25){
+  const y=T+inner*(1-t);
+  out+=`<line x1="${L}" x2="${W-R}" y1="${y}" y2="${y}" stroke="#2a3a53"/>
+   <text x="${L-7}" y="${y+4}" text-anchor="end" fill="#8294ad" font-size="10">${fmt(max*t)}</text>`;
+ }
+
+ return `<svg class="chart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}">${out}</svg>
+ <div class="legend">
+  <span class="legend-item"><i class="legend-dot" style="background:#79a9ff"></i>${safe(a.name)}</span>
+  <span class="legend-item"><i class="legend-dot" style="background:#45d6a0"></i>${safe(b.name)}</span>
+ </div>`;
+}
+
+function changeHtml(v){
+ const cls=v>0?'diff-positive':v<0?'diff-negative':'diff-neutral';
+ return `<b class="${cls}">${v>0?'+':''}${fmt(v)}</b>`;
+}
+
+function renderCompare(){
+ const a=records.find(r=>r.id===$('compareA').value);
+ const b=records.find(r=>r.id===$('compareB').value);
+
+ if(!a||!b){
+  $('compareResult').innerHTML='<div class="empty">İki deneme seçtiğinde branşları karşılaştıracağım.</div>';
+  return;
+ }
+
+ if(a.id===b.id){
+  $('compareResult').innerHTML='<div class="empty">Karşılaştırmak için iki farklı deneme seç.</div>';
+  return;
+ }
+
+ const rows=subjectTemplates.map(s=>`
+  <tr><td>${s.name}</td><td>${fmt(a.parts[s.id]||0)}</td><td>${fmt(b.parts[s.id]||0)}</td>
+  <td>${changeHtml((b.parts[s.id]||0)-(a.parts[s.id]||0))}</td></tr>`).join('');
+
+ const diff=b.total-a.total;
+
+ $('compareResult').innerHTML=`
+  <div class="grid" style="margin-top:12px">
+   <div class="metric"><small>${safe(a.name)} · Net</small><strong>${fmt(a.total)}</strong></div>
+   <div class="metric"><small>${safe(b.name)} · Net</small><strong>${fmt(b.total)}</strong></div>
+   <div class="metric"><small>Net farkı</small><strong>${changeHtml(diff)}</strong></div>
+  </div>
+
+  <div class="chartbox" id="compareChartBox">
+   <div class="charttitle">Branş bazlı karşılaştırma</div>
+   ${groupedChart(a,b)}
+  </div>
+
+  <button class="download" data-export="compareChartBox">Karşılaştırma grafiğini PNG indir</button>
+
+  <div class="scroll">
+   <table>
+    <thead><tr><th>Branş</th><th>${safe(a.name)}</th><th>${safe(b.name)}</th><th>Fark</th></tr></thead>
+    <tbody>${rows}
+     <tr><th>Toplam net</th><th>${fmt(a.total)}</th><th>${fmt(b.total)}</th><th>${changeHtml(diff)}</th></tr>
+    </tbody>
+   </table>
+  </div>
+
+  <div class="insight">Çalışma endeksi: ${fmt(a.score||0)} → ${fmt(b.score||0)} · Değişim ${changeHtml((b.score||0)-(a.score||0))}</div>`;
+}
+
+function getSelected(){
+ return [...document.querySelectorAll('.multiPick:checked')]
+  .map(x=>records.find(r=>r.id===x.value)).filter(Boolean);
+}
+
+/* Çoklu analiz: toplam net grafiği ve her branş için ayrı açılır grafik. */
+function renderMulti(){
+ const selected=getSelected();
+
+ if(!selected.length){
+  $('multiResult').innerHTML='<div class="empty">Analiz için en az bir deneme seç.</div>';
+  return;
+ }
+
+ const averageTotal=selected.reduce((a,r)=>a+r.total,0)/selected.length;
+ const first=selected[0];
+ const last=selected[selected.length-1];
+ const diff=last.total-first.total;
+
+ const branchStats=subjectTemplates.map(s=>{
+  const nets=selected.map(r=>Number(r.parts[s.id]||0));
+  const averageNet=nets.reduce((a,n)=>a+n,0)/nets.length;
+
+  const averageRate=selected.reduce((sum,r)=>{
+   const year=String(r.year||'2026');
+   const template=subjectTemplates.find(x=>x.id===s.id);
+   const questionCount=year==='2025'?template.q25:template.q26;
+   return sum+((Number(r.parts[s.id]||0)/questionCount)*100);
+  },0)/selected.length;
+
+  return {subject:s,nets,averageNet,averageRate};
+ });
+
+ const best=[...branchStats].sort((a,b)=>b.averageRate-a.averageRate)[0];
+ const weak=[...branchStats].sort((a,b)=>a.averageRate-b.averageRate)[0];
+
+ let html=`
+  <div class="grid" style="margin-top:10px">
+   <div class="metric"><small>Analiz edilen deneme</small><strong>${selected.length}</strong></div>
+   <div class="metric"><small>Ortalama net</small><strong>${fmt(averageTotal)}</strong></div>
+   <div class="metric"><small>İlk-son farkı</small><strong>${changeHtml(diff)}</strong></div>
+  </div>
+
+  <div class="chartbox" id="multiChart">
+   <div class="charttitle">Seçilen bütün denemelerin toplam net karşılaştırması</div>
+   ${multiSeriesChart(selected,r=>r.total)}
+  </div>
+
+  <div class="insight">Grafikte her deneme ayrı bir renkle gösteriliyor. Aynı renk, aşağıdaki bütün branş grafiklerinde de aynı denemeyi temsil eder.</div>
+
+  <div class="charttitle" style="margin:16px 4px 8px">Branş bazında ayrıntılı karşılaştırma</div>
+  <div class="notice">İstediğin branşa dokunarak aç. Seçtiğin bütün denemelerin o branştaki netleri tek grafikte yan yana görünecek.</div>
+ `;
+
+ branchStats.forEach((item,index)=>{
+  const s=item.subject;
+  const chartId='multiBranchChart-'+s.id;
+
+  html+=`
+   <details class="multi-branch">
+    <summary>
+     <span>${s.name}</span>
+     <span class="branch-summary-info">Ort. ${fmt(item.averageNet)} net</span>
+    </summary>
+
+    <div class="multi-branch-content">
+     <div class="chartbox" id="${chartId}">
+      <div class="charttitle">${s.name} · Deneme karşılaştırması</div>
+      ${multiSeriesChart(selected,r=>Number(r.parts[s.id]||0))}
+     </div>
+
+     <button class="download" data-export="${chartId}">${s.name} grafiğini PNG indir</button>
+
+     <div class="scroll">
+      <table>
+       <thead><tr><th>Deneme</th><th>Net</th><th>Soru dağılımı</th></tr></thead>
+       <tbody>
+        ${selected.map((r,i)=>{
+         const year=String(r.year||'2026');
+         const q=year==='2025'?s.q25:s.q26;
+         return `<tr>
+          <td><span class="legend-item"><i class="legend-dot" style="background:${examColors[i%examColors.length]}"></i>${safe(r.name)}</span></td>
+          <td><b>${fmt(r.parts[s.id]||0)}</b></td>
+          <td>${q} soru · ${year}</td>
+         </tr>`;
+        }).join('')}
+        <tr><th>Ortalama</th><th>${fmt(item.averageNet)}</th><th>—</th></tr>
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </details>
+  `;
+ });
+
+ html+=`
+  <div class="insight">💪 Ortalama başarı oranına göre en güçlü branşın <b>${best.subject.name}</b> (${fmt(best.averageRate)}%).</div>
+  <div class="insight warn">🎯 Gelişime en açık branş <b>${weak.subject.name}</b> (${fmt(weak.averageRate)}%).</div>
+ `;
+
+ $('multiResult').innerHTML=html;
+}
+
+function render(){
+ records.sort((a,b)=>a.date.localeCompare(b.date)||(a.createdAt||'').localeCompare(b.createdAt||''));
+
+ const n=records.length;
+ const last=records[n-1];
+ const prev=records[n-2];
+
+ $('mCount').textContent=n;
+ $('mNet').textContent=last?fmt(last.total):'—';
+ $('mScore').textContent=last&&last.score!==null?fmt(last.score):'—';
+ const best=records.length?[...records].sort((a,b)=>Number(b.total)-Number(a.total)||b.date.localeCompare(a.date))[0]:null;
+ function featuredCard(record,label){
+  return `<div class="featured-label">${label}</div>`+(record ? `<div class="featured-name">${safe(record.name)}</div><div class="featured-meta">${safe(record.date)}</div><div class="featured-net">${fmt(record.total)} <small>net</small></div>` : '<div class="featured-meta">İlk denemeni kaydettiğinde burada görünecek.</div>');
+ }
+ $('bestExamCard').innerHTML=featuredCard(best,'🏆 En iyi denemen');
+ $('latestExamCard').innerHTML=featuredCard(last,'📅 Son denemen');
+
+ const charts=[
+  ['netChart',records.map(r=>r.total),records.map((r,i)=>'D'+(i+1)),'#45d6a0','İlk denemeni kaydettiğinde grafik burada oluşacak.'],
+  ['scoreChart',records.map(r=>r.score||0),records.map((r,i)=>'D'+(i+1)),'#f4c76b','Henüz puan verisi yok.']
+ ];
+
+ charts.forEach(([id,data,labels,color,empty])=>{
+  $(id).className=n?'':'empty';
+  $(id).innerHTML=n?svgBars(data,labels,color):empty;
+ });
+
+ const avg=subjectTemplates.map(s=>
+  records.length?records.reduce((a,r)=>a+(r.parts[s.id]||0),0)/records.length:0
+ );
+
+ $('averageChart').className=n?'':'empty';
+ $('averageChart').innerHTML=n
+  ?svgBars(avg,subjectTemplates.map(s=>s.name.length>12?s.name.slice(0,11)+'…':s.name),'#79a9ff')
+  :'Henüz branş verisi yok.';
+
+ const options=records.map(r=>
+  `<option value="${safe(r.id)}">${safe(r.name)} · ${r.date} · ${fmt(r.total)} net</option>`
+ ).join('');
+
+ const oldA=$('compareA').value;
+ const oldB=$('compareB').value;
+
+ $('compareA').innerHTML='<option value="">Deneme seç</option>'+options;
+ $('compareB').innerHTML='<option value="">Deneme seç</option>'+options;
+
+ if(records.some(r=>r.id===oldA))$('compareA').value=oldA;
+ if(records.some(r=>r.id===oldB))$('compareB').value=oldB;
+
+ $('multiChecks').innerHTML=n?records.slice().reverse().map(r=>`
+  <label class="checkline">
+   <input class="multiPick" type="checkbox" value="${safe(r.id)}" checked>
+   <span><b>${safe(r.name)}</b><br><small>${r.date} · ${fmt(r.total)} net</small></span>
+  </label>
+ `).join(''):'<div class="empty">Önce deneme kaydet.</div>';
+
+ if(!n){
+  $('insights').innerHTML='<div class="empty">Denemelerini kaydet; güçlü ve gelişime açık branşlarını analiz edeyim.</div>';
+  $('history').innerHTML='<div class="empty">Henüz kayıt yok.</div>';
+  $('compareResult').innerHTML='<div class="empty">İki deneme seçtiğinde karşılaştırma burada görünecek.</div>';
+  $('multiResult').innerHTML='<div class="empty">Önce deneme kaydet.</div>';
+  return;
+ }
+
+ const sorted=subjectTemplates.map(s=>{
+  const q=String(last.year||'2026')==='2025'?s.q25:s.q26;
+  const net=last.parts[s.id]||0;
+  return {name:s.name,net,q};
+ }).sort((a,b)=>(b.net/b.q)-(a.net/a.q));
+
+ let html=`
+  <div class="insight">📌 Son denemen <b>${safe(last.name)}</b>: <b>${fmt(last.total)} net</b>.
+  ${prev?`Bir önceki kayda göre <b>${last.total-prev.total>0?'+':''}${fmt(last.total-prev.total)} net</b> ${last.total>=prev.total?'artış':'düşüş'} var.`:'İlk denemen kaydedildi; sonraki denemelerinle gelişimini karşılaştıracağız.'}</div>
+  <div class="insight">💪 Son denemendeki en güçlü branş: <b>${sorted[0].name}</b>.</div>
+  <div class="insight warn">🎯 Gelişime en açık branş: <b>${sorted[sorted.length-1].name}</b>.</div>
+ `;
+
+ if(prev){
+  html+=last.total>prev.total
+   ?'<div class="insight">🔥 Önceki denemene göre ilerleme kaydettin. Aynı disiplinle devam!</div>'
+   :last.total<prev.total
+   ?'<div class="insight warn">Düşüş moralini bozmasın. Yanlışlarını inceleyip eksik konulara dön; toparlayabilirsin.</div>'
+   :'<div class="insight">Netin önceki denemenle aynı. Bir sonraki denemede küçük bir artış hedefleyelim.</div>';
+ }
+
+ if(records.length>=3){
+  const recent=records.slice(-3);
+
+  for(const s of subjectTemplates){
+   const delta=(recent[2].parts[s.id]||0)-(recent[0].parts[s.id]||0);
+
+   if(delta<-.5)html+=`<div class="insight warn">⚠️ ${s.name}: Son üç kayıt aralığında ${fmt(-delta)} net düşüş var.</div>`;
+   else if(delta>.5)html+=`<div class="insight">📈 ${s.name}: Son üç kayıt aralığında ${fmt(delta)} net gelişim var.</div>`;
+  }
+ }
+
+ $('insights').innerHTML=html;
+
+ $('history').innerHTML=records.slice().reverse().map(r=>`
+  <div class="history-item">
+   <div class="history-top">
+    <div>
+     <div class="history-name">${safe(r.name)}</div>
+     <div class="history-meta">${r.date} · ${fmt(r.total)} net · Çalışma endeksi ${r.score===null?'—':fmt(r.score)}</div>
+    </div>
+    <button class="danger" style="padding:7px 10px;font-size:11px;flex:0 0 auto" data-del="${safe(r.id)}">Sil</button>
+   </div>
+
+   <details class="history-detail">
+    <summary>Branş ayrıntılarını göster</summary>
+    <div class="branch-list">
+     ${subjectTemplates.map(s=>`<div class="branch-chip"><span>${s.name}</span><b>${fmt(r.parts[s.id]||0)} net</b></div>`).join('')}
+    </div>
+   </details>
+  </div>
+ `).join('');
+
+ document.querySelectorAll('[data-del]').forEach(b=>{
+  b.onclick=()=>{
+   const r=records.find(x=>x.id===b.dataset.del);
+
+   if(r&&confirm(r.name+' kaydını silmek istiyor musun?')){
+    records=records.filter(x=>x.id!==b.dataset.del);
+    deleteExamFromCloud(b.dataset.del);
+    persist();
+    render();
+   }
+  };
+ });
+
+ renderCompare();
+ renderMulti();
+}
+
+/* SVG grafiklerini PNG dosyasına dönüştürür. */
+function downloadSvgAsPng(elementId){
+ const el=$(elementId);
+
+ if(!el){
+  alert('İndirilecek grafik bulunamadı.');
+  return;
+ }
+
+ const svg=el.querySelector('svg');
+
+ if(!svg){
+  alert('Önce grafiğin oluşması için deneme kaydet.');
+  return;
+ }
+
+ const clone=svg.cloneNode(true);
+ clone.setAttribute('xmlns','http://www.w3.org/2000/svg');
+
+ const view=clone.viewBox.baseVal;
+ const width=view&&view.width?view.width:680;
+ const height=view&&view.height?view.height:230;
+
+ const source=new XMLSerializer().serializeToString(clone);
+ const blob=new Blob([source],{type:'image/svg+xml;charset=utf-8'});
+ const url=URL.createObjectURL(blob);
+
+ const img=new Image();
+
+ img.onload=()=>{
+  const canvas=document.createElement('canvas');
+  canvas.width=width*2;
+  canvas.height=height*2;
+
+  const ctx=canvas.getContext('2d');
+  ctx.fillStyle='#101a2b';
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.scale(2,2);
+  ctx.drawImage(img,0,0,width,height);
+
+  URL.revokeObjectURL(url);
+
+  const a=document.createElement('a');
+  a.download='ags-akademi-'+elementId+'.png';
+  a.href=canvas.toDataURL('image/png');
+  a.click();
+ };
+
+ img.onerror=()=>{
+  URL.revokeObjectURL(url);
+  alert('Grafik PNG olarak dönüştürülemedi.');
+ };
+
+ img.src=url;
+}
+
+document.addEventListener('click',e=>{
+ const btn=e.target.closest('[data-export]');
+ if(!btn)return;
+ downloadSvgAsPng(btn.dataset.export);
+});
+
+$('save').onclick=save;
+
+$('clear').onclick=()=>{
+ document.querySelectorAll('.score').forEach(i=>{
+  i.value='';
+  i.style.borderColor='';
+ });
+
+ $('examName').value='';
+ $('error').textContent='';
+ $('error').classList.remove('success');
+ updateLive();
+};
+
+$('examYear').addEventListener('change',setSubjects);
+$('compareA').addEventListener('change',renderCompare);
+$('compareB').addEventListener('change',renderCompare);
+
+$('multiChecks').addEventListener('change',e=>{
+ if(e.target.classList.contains('multiPick'))renderMulti();
+});
+
+$('selectAll').onclick=()=>{
+ document.querySelectorAll('.multiPick').forEach(x=>x.checked=true);
+ renderMulti();
+};
+
+$('selectNone').onclick=()=>{
+ document.querySelectorAll('.multiPick').forEach(x=>x.checked=false);
+ renderMulti();
+};
+
+$('deleteAll').onclick=async ()=>{
+ if(confirm('Tüm deneme kayıtların kalıcı olarak silinsin mi?')){
+  if(window.agsCurrentUserId){
+   const { error } = await agsSupabase
+    .from('exams')
+    .delete()
+    .eq('user_id', window.agsCurrentUserId);
+
+   if(error){
+    alert('Bulut kayıtları silinemedi: '+error.message);
+    return;
+   }
+  }
+
+  records=[];
+  persist();
+  render();
+ }
+};
+
+$('export').onclick=()=>{
+ if(!records.length){
+  alert('Dışa aktarılacak kayıt yok.');
+  return;
+ }
+
+ const rows=[
+  ['Deneme adı','Tarih','Yıl',...subjectTemplates.map(s=>s.name+' net'),'Toplam net','Çalışma endeksi'],
+  ...records.map(r=>[
+   r.name,r.date,r.year,
+   ...subjectTemplates.map(s=>r.parts[s.id]||0),
+   r.total,r.score??''
+  ])
+ ];
+
+ const csv='\ufeff'+rows.map(row=>
+  row.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(';')
+ ).join('\r\n');
+
+ const a=document.createElement('a');
+ const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+
+ a.href=url;
+ a.download='ags-akademi-deneme-gecmisi.csv';
+ a.click();
+
+ setTimeout(()=>URL.revokeObjectURL(url),1000);
+};
+
+setSubjects();
+render();
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const SUPABASE_URL = "https://qabcqkraqthkixjmhxyr.supabase.co" ;
+const SUPABASE_KEY =  "sb_publishable_rAiSUoFm-rggMj5Q0tt-oQ_yya_mm-P";
+
+const agsSupabase = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+console.log("AGS Akademi Supabase bağlantısı hazır.");
+</script>
+
+
+
+<script>
+(async function () {
+  const { data, error } = await agsSupabase
+    .from("exams")
+    .select("id")
+    .limit(1);
+
+  if (error) {
+    console.error("Supabase bağlantı hatası:", error.message);
+  } else {
+    console.log("AGS Akademi veritabanına başarıyla bağlandı!");
+  }
+})();
+</script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js")
+      .then(() => console.log("AGS Akademi çevrimdışı sistemi hazır."))
+      .catch(error => console.error("Service Worker hatası:", error));
+  });
+}
+</script>
+
+
+
+<script>
+(async function () {
+  const box = document.getElementById("ags-auth");
+  const message = document.getElementById("ags-auth-message");
+  const email = document.getElementById("ags-email");
+  const nameInput = document.getElementById("ags-name");
+  const password = document.getElementById("ags-password");
+  const signup = document.getElementById("ags-signup");
+  const login = document.getElementById("ags-login");
+  const logout = document.getElementById("ags-logout");
+  const guest = document.getElementById("ags-guest");
+
+if (typeof agsSupabase === "undefined") {
+    message.textContent = "Supabase bağlantısı bulunamadı.";
+    return;
+  }
+
+  const supabase = agsSupabase;
+
+ async function updateUI() {
+  const { data } = await supabase.auth.getSession();
+  const user = data.session?.user;
+  const userName = document.getElementById("ags-user-name");
+
+  if (user) {
+    email.style.display = "none";
+    password.style.display = "none";
+    nameInput.style.display = "none";
+    signup.style.display = "none";
+    login.style.display = "none";
+    guest.style.display = "none";
+
+    userName.textContent = user.user_metadata?.name || "serhat";
+    userName.style.display = "flex";
+    userName.style.alignItems = "center";
+    userName.style.gap = "10px";
+
+    userName.appendChild(logout);
+    logout.style.display = "inline-block";
+    logout.style.padding = "7px 10px";
+    logout.style.fontSize = "11px";
+
+    box.style.display = "none";
+
+  } else {
+    userName.style.display = "none";
+    box.appendChild(logout);
+    logout.style.display = "none";
+
+    box.style.display = "block";
+    email.style.display = "block";
+    password.style.display = "block";
+    nameInput.style.display = "block";
+    message.textContent = "Giriş yap veya misafir olarak devam et.";
+    signup.style.display = "inline-block";
+    login.style.display = "inline-block";
+    guest.style.display = "inline-block";
+  }
+}
+
+  signup.onclick = async () => {
+    if (!email.value || !password.value || !nameInput.value.trim()) {
+      message.textContent = "Adını, e-postanı ve şifreni gir.";
+      return;
+    }
+
+    const { data, error } = await supabase.auth.signUp({
+      email: email.value.trim(),
+      password: password.value,
+      options: {
+        data: { name: nameInput.value.trim() }
+      }
+    });
+
+    if (error) {
+      message.textContent = "Hesap oluşturulamadı: " + error.message;
+      return;
+    }
+
+    message.textContent = data.session
+      ? "Hesap oluşturuldu!"
+      : "Hesap oluşturuldu. Şimdi giriş yapabilirsin.";
+    await updateUI();
+  };
+
+  login.onclick = async () => {
+    if (!email.value || !password.value) {
+      message.textContent = "E-posta ve şifreni gir.";
+      return;
+    }
+
+    const { error } = await supabase.auth.signInWithPassword({
+      email: email.value.trim(),
+      password: password.value
+    });
+
+    if (error) {
+      message.textContent = "Giriş başarısız: " + error.message;
+      return;
+    }
+
+    await updateUI();
+  };
+
+  logout.onclick = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      message.textContent = error.message;
+      return;
+    }
+    await updateUI();
+    message.textContent = "Çıkış yapıldı.";
+  };
+
+  guest.onclick = () => {
+    message.textContent = "Misafir olarak devam ediyorsun. Verilerin bu cihazda kalır.";
+    box.style.display = "none";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+supabase.auth.onAuthStateChange((event, session) => {
+  updateUI();
+
+  const user = session?.user || null;
+
+  if (typeof window.agsLoadUserRecords === 'function') {
+    setTimeout(() => window.agsLoadUserRecords(user), 0);
+  } else {
+    window.agsPendingAuthUser = user;
+  }
+});
+
+await updateUI();
+})();
+</script>
+
+</body>
+</html>
