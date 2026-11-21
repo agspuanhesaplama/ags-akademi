@@ -129,6 +129,12 @@ footer{text-align:center;color:#73859e;font-size:11px;padding:12px}
 <style>
 .study-clock{text-align:center;padding:28px 12px;background:#17243a;border:1px solid #2a3a53;border-radius:16px;margin:16px 0}.study-phase{color:#45d6a0;font-weight:750}.study-clock-number{font-size:clamp(42px,9vw,72px);font-weight:900;font-variant-numeric:tabular-nums;letter-spacing:2px;margin:10px 0}.study-total{background:#16332e;border:1px solid #45d6a055;border-radius:14px;padding:18px;text-align:center;display:flex;flex-direction:column;gap:8px}.study-total strong{color:#45d6a0;font-size:clamp(30px,7vw,45px);font-variant-numeric:tabular-nums}.study-total small{color:#a9c8bc}.study-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.study-stat{background:#17243a;border:1px solid #2a3a53;border-radius:10px;padding:12px;text-align:center}.study-stat strong{display:block;font-size:18px;color:#45d6a0}.study-stat small{color:#9aabc1;font-size:11px}@media(max-width:450px){.study-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
+<style>
+.profile-banner{display:flex;align-items:center;gap:15px;background:#17243a;border:1px solid #2a3a53;border-radius:15px;padding:18px;margin:15px 0}.profile-avatar{height:58px;width:58px;border-radius:50%;background:#22493f;display:grid;place-items:center;font-size:28px}.profile-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.profile-panel{padding:18px;background:#17243a;border:1px solid #2a3a53;border-radius:15px}.profile-panel h3{margin:0 0 15px}.profile-panel label:not(.profile-check){display:block;margin:12px 0 5px;color:#bdcce0;font-size:13px}.profile-panel input:not([type=checkbox]),.profile-panel select{width:100%;box-sizing:border-box;max-width:100%;margin:0 0 5px}.profile-panel button{margin:10px 6px 0 0}.profile-check{display:flex;align-items:center;gap:10px;line-height:1.5}.profile-check input{width:auto}.profile-panel [role=status]{overflow-wrap:anywhere}@media(max-width:640px){.profile-grid{grid-template-columns:1fr}}
+</style>
+<style>
+.profile-banner{flex-wrap:wrap}.profile-avatar{flex:0 0 72px;width:72px;height:72px;overflow:hidden;cursor:pointer;border:2px solid #45d6a0;position:relative;color:#e6fff4;font-weight:800}.profile-avatar img{width:100%;height:100%;object-fit:cover;display:block}.profile-avatar:focus-visible{outline:3px solid #f4c76b;outline-offset:3px}.profile-person{flex:1;min-width:140px}.profile-photo-hint{font-size:11px;color:#9aabc1;margin-top:4px}.profile-upgrade{margin-left:auto!important;background:linear-gradient(125deg,#f9df8b,#e3a83e)!important;color:#34220c!important;border:1px solid #ffe9a5!important;border-radius:13px!important;padding:13px 16px!important;font-weight:900!important;box-shadow:0 3px 20px #f4c76b25;white-space:nowrap}.profile-upgrade:hover{filter:brightness(1.08)}.profile-upgrade:focus-visible{outline:3px solid #45d6a0;outline-offset:3px}.profile-photo-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.profile-photo-actions button{margin:0!important}.profile-premium-info{background:#2a2418;border:1px solid #8b6b32;border-radius:12px;padding:14px;margin:0 0 14px;color:#f5e1b4}.profile-premium-info[hidden]{display:none}.profile-premium-info p{margin:7px 0}.profile-premium-info button{background:#f4c76b;color:#30220e}@media(max-width:600px){.profile-upgrade{margin-left:0!important;width:100%}.profile-banner{gap:12px}}
+</style>
 </head>
 <body>
 <nav class="app-sidebar" aria-label="Ana menü">
@@ -140,6 +146,7 @@ footer{text-align:center;color:#73859e;font-size:11px;padding:12px}
  <button class="nav-btn" type="button" data-view="questions">📚 Soru Bankası</button>
  <button class="nav-btn" type="button" data-view="planner">📅 Çalışma Programı</button>
  <button class="nav-btn" type="button" data-view="study">⏳ Ders Çalışma</button>
+ <button class="nav-btn" type="button" data-view="profile">⚙ Profilim ve Ayarlar</button>
 </nav>
 <main class="wrap">
 
@@ -179,6 +186,21 @@ footer{text-align:center;color:#73859e;font-size:11px;padding:12px}
  <div class="notice">Net hesabı: Doğru − (Yanlış ÷ 4). Kayıtlar bu cihazdaki tarayıcıda saklanır.</div>
 </section>
 
+
+
+<section class="section" id="progressHub" aria-label="Çalışma ve deneme ilişkisi">
+ <h2>📈 Çalışma ve Deneme Gelişimi</h2>
+ <p class="sub">Kaydettiğin çalışma süreleri, çözdüğün sorular ve deneme netlerini aynı yerde incele. Molalar çalışma süresine dahil edilmez.</p>
+ <div class="row2">
+  <div><label for="progressExam">Sınav türü</label><select id="progressExam"><option value="AGS">MEB-AGS</option><option value="KPSS_LISANS">KPSS Lisans</option><option value="KPSS_ONLISANS">KPSS Ön Lisans</option><option value="KPSS_ORTAOGRETIM">KPSS Ortaöğretim</option><option value="OABT">ÖABT</option></select></div>
+  <div><label for="progressSubject">Ders / branş</label><select id="progressSubject"><option value="all">Tüm dersler</option></select></div>
+ </div>
+ <div class="row2"><div><label for="progressPeriod">Dönem</label><select id="progressPeriod"><option value="30">Son 30 gün</option><option value="7">Son 7 gün</option><option value="90">Son 90 gün</option><option value="all">Tüm zamanlar</option></select></div><div><label for="progressOabtField">ÖABT alanı</label><select id="progressOabtField" disabled><option value="all">Tüm alanlar</option></select></div></div>
+ <div id="progressMetrics" class="grid" aria-live="polite"></div>
+ <div class="chartbox"><div class="charttitle">Deneme netlerinin zaman içindeki değişimi</div><div id="progressTrend" class="empty">Henüz veri yok.</div></div>
+ <div id="progressInsights" aria-live="polite"></div>
+ <div class="notice">Çalışma ve soru kayıtları henüz sınav türüne göre etiketlenmediğinden, aynı ders için tüm sınavlarda ortak görünebilir. Deneme netleri ise seçilen sınava göre filtrelenir. Birlikte artış nedensellik kanıtı değildir.</div>
+</section>
 
 <section class="section">
  <h2>Gelişim grafikleri</h2>
@@ -346,6 +368,45 @@ footer{text-align:center;color:#73859e;font-size:11px;padding:12px}
  <section class="section"><h2>Çalışma İstatistikleri</h2><div id="studySummary"></div><h3 style="margin-top:16px">Son Çalışmalar</h3><div id="studyHistory"></div></section>
 </div>
 <footer>AGS Akademi · Veriler cihazında saklanır. Tarayıcı verilerini silersen kayıtlar da silinebilir.</footer>
+
+<div class="app-view" id="view-profile">
+ <section class="section">
+  <h2>⚙ Profilim ve Hesap Ayarları</h2>
+  <p class="v4-mini">Kişisel bilgilerini düzenle, sınav hedefini belirle ve hesap güvenliğini yönet.</p>
+  <div class="profile-banner"><button type="button" class="profile-avatar" id="profileAvatar" aria-label="Profil fotoğrafı seç" title="Profil fotoğrafı yükle">👤</button><div class="profile-person"><strong id="profileGreeting">Öğrenci Profili</strong><div id="profileMembership" class="v4-mini">Üyelik: Ücretsiz</div><div id="profileAccountStatus" class="v4-mini">Hesap kontrol ediliyor…</div><div class="profile-photo-hint">📷 Fotoğraf eklemek için simgeye dokun</div></div><button type="button" class="profile-upgrade" id="profileUpgrade">🏆 ✨ Premium'a Yükselt</button></div>
+  <input id="profilePhotoFile" type="file" accept="image/jpeg,image/png,image/webp,image/*" style="display:none" aria-label="Profil fotoğrafı yükle">
+  <div class="profile-photo-actions"><button type="button" id="profilePhotoRemove" class="secondary">Fotoğrafı Kaldır</button><span id="profilePhotoMessage" class="v4-mini" role="status" aria-live="polite"></span></div>
+  <div id="profilePremiumInfo" class="profile-premium-info" hidden><strong>🏆 ✨ AGS Akademi Premium</strong><p>Planlanan Premium: 49 TL/ay. Gelişmiş analizler ve reklamsız deneyim hedefleniyor. Ödeme ve abonelik sistemi henüz aktif değil.</p><button type="button" id="profilePremiumClose">Kapat</button></div>
+  <div class="profile-grid">
+   <div class="profile-panel"><h3>Profil bilgilerim</h3>
+    <label for="profileName">Ad soyad</label><input id="profileName" maxlength="90" placeholder="Ad soyad">
+    <label for="profileExam">Hazırlandığım sınav</label><select id="profileExam"><option value="AGS">MEB-AGS</option><option value="OABT">ÖABT</option><option value="KPSS-L">KPSS Lisans</option><option value="KPSS-ON">KPSS Ön Lisans</option><option value="KPSS-ORT">KPSS Ortaöğretim</option></select>
+    <label for="profileYear">Hedef sınav yılı</label><select id="profileYear"><option value="2026">2026</option><option value="2027">2027</option><option value="2028">2028</option><option value="2029">2029</option><option value="2030">2030</option></select>
+    <button type="button" id="profileSave">Profilimi Kaydet</button>
+    <p id="profileMessage" class="v4-mini" role="status" aria-live="polite"></p>
+   </div>
+   <div class="profile-panel"><h3>Hesap güvenliği</h3>
+    <label for="profileEmail">E-posta adresim</label><input id="profileEmail" type="email" autocomplete="email" placeholder="E-posta adresi">
+    <button type="button" id="profileEmailUpdate">E-posta Değişikliğini İste</button>
+    <label for="profilePassword">Yeni şifre</label><input id="profilePassword" type="password" minlength="8" autocomplete="new-password" placeholder="En az 8 karakter">
+    <button type="button" id="profilePasswordUpdate">Şifremi Değiştir</button>
+    <button type="button" id="profileSignOut">Hesabımdan Çıkış Yap</button>
+    <p id="profileSecurityMessage" class="v4-mini" role="status" aria-live="polite"></p>
+   </div>
+   <div class="profile-panel"><h3>Bildirim tercihlerim</h3>
+    <label class="profile-check"><input id="profileReminders" type="checkbox"> Çalışma hatırlatmalarını tercih ediyorum</label>
+    <p class="v4-mini">Bu tercih kaydedilir. Otomatik telefon bildirimi henüz etkin değildir.</p>
+    <button type="button" id="profilePrefsSave">Tercihleri Kaydet</button>
+   </div>
+   <div class="profile-panel"><h3>Verilerim ve üyeliğim</h3>
+    <p class="v4-mini">Mevcut üyelik: <strong>Ücretsiz</strong>. Premium ödemesi henüz aktif değil.</p>
+    <p class="v4-mini">Deneme kayıtlarının CSV çıktısını Deneme Geçmişi bölümünden alabilirsin. Tüm verilerin buluta eşitlenmesi henüz tamamlanmadı.</p>
+    <button type="button" id="profileHistory">Deneme Geçmişine Git</button>
+    <p class="v4-mini">Hesap silme işlemi henüz uygulama içinden desteklenmiyor. Silme talebi için destek kanalı oluşturulması gerekiyor.</p>
+   </div>
+  </div>
+ </section>
+</div>
 </main>
 
 <script>
@@ -1381,7 +1442,7 @@ await updateUI();
 
 <script>
 (function(){
- const views=['dashboard','simulator','entry','history','questions','planner','study'];
+ const views=['dashboard','simulator','entry','history','questions','planner','study','profile'];
  window.agsNavigate=function(view){
   if(!views.includes(view))view='dashboard';
   document.querySelectorAll('.app-view').forEach(el=>el.classList.toggle('active',el.id==='view-'+view));
@@ -1636,6 +1697,164 @@ document.addEventListener('click',function(event){
  [mode,focus,breakM].forEach(x=>x.addEventListener('change',render));
  function renderStats(){const rows=read(),today=new Date().toLocaleDateString('en-CA'),weekAgo=new Date(Date.now()-6*86400000).toLocaleDateString('en-CA');const sum=a=>a.reduce((t,x)=>t+Number(x.seconds||0),0);const todayS=sum(rows.filter(x=>x.date===today)),weekS=sum(rows.filter(x=>x.date>=weekAgo)),allS=sum(rows);el('studySummary').innerHTML='<div class="study-stats"><div class="study-stat"><strong>'+hhmmss(todayS)+'</strong><small>Bugün</small></div><div class="study-stat"><strong>'+hhmmss(weekS)+'</strong><small>Son 7 gün</small></div><div class="study-stat"><strong>'+hhmmss(allS)+'</strong><small>Tüm zamanlar</small></div></div>';const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));el('studyHistory').innerHTML=rows.length?rows.slice(0,30).map(x=>'<div class="history-item"><div class="history-name">'+esc(x.subject)+' · '+(x.mode==='pomodoro'?'Pomodoro':'Serbest Çalışma')+'</div><div class="history-meta">'+esc(x.date)+' · '+hhmmss(x.seconds)+' net çalışma</div></div>').join(''):'<div class="empty">Henüz çalışma kaydı yok.</div>';}
  ticker=setInterval(tick,250);document.addEventListener('visibilitychange',()=>{if(!document.hidden)tick()});window.addEventListener('storage',renderStats);document.querySelectorAll('.nav-btn[data-view="study"]').forEach(b=>b.addEventListener('click',renderStats));render();renderStats();
+})();
+</script>
+<script>
+/* AGS Akademi 5.3: mevcut kayıtlara dokunmadan çalışma + soru + deneme ilişkisi */
+(function(){
+ const $=id=>document.getElementById(id), exam=$('progressExam'),subject=$('progressSubject'),period=$('progressPeriod'),field=$('progressOabtField');
+ if(!exam||!subject)return;
+ const escapeHtml=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const read=k=>{try{const v=JSON.parse(localStorage.getItem(k)||'[]');return Array.isArray(v)?v:[]}catch{return []}};
+ const user=()=>window.agsCurrentUserId||'guest';
+ const datestr=d=>[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');
+ const normalize=x=>String(x||'').toLocaleLowerCase('tr-TR').replace(/ı/g,'i').replace(/ğ/g,'g').replace(/ü/g,'u').replace(/ş/g,'s').replace(/ö/g,'o').replace(/ç/g,'c').replace(/[^a-z0-9]/g,'');
+ const match=(a,b)=>normalize(a)===normalize(b)||(['Sayısal Yetenek','Matematik'].includes(a)&&['Sayısal Yetenek','Matematik'].includes(b))||(['Sözel Yetenek','Türkçe'].includes(a)&&['Sözel Yetenek','Türkçe'].includes(b))||(['Türkiye Coğrafyası','Coğrafya'].includes(a)&&['Türkiye Coğrafyası','Coğrafya'].includes(b))||(['Eğitim Bilimleri','Eğitim Bilimleri ve Türk Millî Eğitim Sistemi'].includes(a)&&['Eğitim Bilimleri','Eğitim Bilimleri ve Türk Millî Eğitim Sistemi'].includes(b));
+ const exams={AGS:'MEB-AGS',KPSS_LISANS:'KPSS Lisans',KPSS_ONLISANS:'KPSS Ön Lisans',KPSS_ORTAOGRETIM:'KPSS Ortaöğretim',OABT:'ÖABT'};
+ const typeAliases={KPSS_LISANS:['KPSS_LISANS','KPSS_L','KPSS-L','KPSS Lisans'],KPSS_ONLISANS:['KPSS_ONLISANS','KPSS_ON','KPSS-ON','KPSS Ön Lisans'],KPSS_ORTAOGRETIM:['KPSS_ORTAOGRETIM','KPSS_ORT','KPSS-ORT','KPSS Ortaöğretim'],OABT:['OABT','ÖABT']};
+ function allExams(){
+  const ags=read(window.agsCurrentUserId?'agsAkademiRecords_user_'+window.agsCurrentUserId:'agsAkademiRecords').map(x=>({...x,_type:'AGS'}));
+  const other=read('agsAkademiOtherExams_v1_'+user()).map(x=>({...x,_type:Object.keys(typeAliases).find(k=>typeAliases[k].some(v=>normalize(v)===normalize(x.type)))||x.type}));
+  return [...ags,...other];
+ }
+ function getSubjectNames(){
+  if(exam.value==='AGS')return ['Tüm dersler','Sözel Yetenek','Sayısal Yetenek','Tarih','Türkiye Coğrafyası','Eğitim Bilimleri ve Türk Millî Eğitim Sistemi','Mevzuat'];
+  if(exam.value==='OABT')return ['Tüm dersler','Alan Testi'];
+  return ['Tüm dersler','Genel Yetenek','Genel Kültür'];
+ }
+ function refreshSelectors(){
+  const old=subject.value;
+  subject.innerHTML=getSubjectNames().map((s,i)=>'<option value="'+(i===0?'all':escapeHtml(s))+'">'+escapeHtml(s)+'</option>').join('');
+  if([...subject.options].some(o=>o.value===old))subject.value=old;
+  field.disabled=exam.value!=='OABT';
+  const prev=field.value,fields=[...new Set(allExams().filter(x=>x._type==='OABT').map(x=>x.field).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'tr'));
+  field.innerHTML='<option value="all">Tüm alanlar</option>'+fields.map(x=>'<option value="'+escapeHtml(x)+'">'+escapeHtml(x)+'</option>').join('');
+  if([...field.options].some(o=>o.value===prev))field.value=prev;
+ }
+ function render(){
+  const today=new Date(),start=period.value==='all'?'':datestr(new Date(today.getFullYear(),today.getMonth(),today.getDate()-Number(period.value)+1));
+  const inPeriod=x=>x.date&&x.date<=datestr(today)&&(!start||x.date>=start);
+  const selected=subject.value;
+  const studies=read('agsAkademiStudy_v1_'+user()).filter(inPeriod).filter(x=>selected==='all'||match(x.subject,selected));
+  const questions=read('agsAkademi_questions_'+user()).filter(inPeriod).filter(x=>selected==='all'||match(x.subject,selected));
+  const examsRows=allExams().filter(x=>x._type===exam.value&&inPeriod(x)).filter(x=>exam.value!=='OABT'||field.value==='all'||x.field===field.value).sort((a,b)=>a.date.localeCompare(b.date)||(a.createdAt||'').localeCompare(b.createdAt||''));
+  const subjectNet=x=>{
+   if(selected==='all')return Number(x.total);
+   const parts=x.parts||{};
+   if(exam.value==='OABT')return Number(parts.field??x.total);
+   const agsKeys={'Sözel Yetenek':'verbal','Sayısal Yetenek':'numeric','Tarih':'history','Türkiye Coğrafyası':'geo','Eğitim Bilimleri ve Türk Millî Eğitim Sistemi':'education','Mevzuat':'law'};
+   const key=exam.value==='AGS'?agsKeys[selected]:selected==='Genel Yetenek'?'gy':'gk';
+   const p=parts[key];return Number(typeof p==='object'?(p.net??p.total):p);
+  };
+  const valid=examsRows.map(x=>({date:x.date,name:x.name||'Deneme',net:subjectNet(x)})).filter(x=>Number.isFinite(x.net));
+  const sec=studies.reduce((a,x)=>a+Math.max(0,Number(x.seconds)||0),0),q=questions.reduce((a,x)=>a+Math.max(0,Number(x.c)||0)+Math.max(0,Number(x.w)||0),0);
+  const hh=Math.floor(sec/3600),mm=Math.floor(sec%3600/60),fmt=n=>n.toFixed(2).replace('.',',');
+  const metric=(label,val)=>'<div class="metric"><small>'+label+'</small><strong>'+escapeHtml(val)+'</strong></div>';
+  $('progressMetrics').innerHTML=metric('Net çalışma',hh+' sa '+mm+' dk')+metric('Çözülen soru',String(q))+metric('Deneme sayısı',String(valid.length))+(valid.length?metric('İlk → son net',fmt(valid[0].net)+' → '+fmt(valid[valid.length-1].net)):metric('Net değişimi','—'));
+  if(!valid.length){$('progressTrend').innerHTML='<div class="empty">Bu filtrede deneme kaydı yok.</div>';}
+  else{
+   const max=Math.max(1,...valid.map(x=>Math.abs(x.net))),w=650,h=190,pad=28;
+   const pts=valid.map((x,i)=>({x:pad+(valid.length===1?0:i*(w-2*pad)/(valid.length-1)),y:h-pad-(x.net/max)*(h-2*pad),...x}));
+   const dots=pts.map(p=>'<circle cx="'+p.x+'" cy="'+p.y+'" r="4" fill="#45d6a0"><title>'+escapeHtml(p.date+' '+p.name+': '+fmt(p.net)+' net')+'</title></circle>').join('');
+   const line=pts.map(p=>p.x+','+p.y).join(' ');
+   $('progressTrend').innerHTML='<svg role="img" aria-label="Deneme netlerinin gelişim grafiği" viewBox="0 0 '+w+' '+h+'" style="width:100%;max-height:240px"><line x1="'+pad+'" y1="'+(h-pad)+'" x2="'+(w-pad)+'" y2="'+(h-pad)+'" stroke="#6c7d92"/><polyline points="'+line+'" fill="none" stroke="#45d6a0" stroke-width="3" stroke-linejoin="round"/>'+dots+'</svg><div class="sub">'+escapeHtml(valid[0].date)+' — '+escapeHtml(valid[valid.length-1].date)+' · '+valid.length+' deneme</div>';
+  }
+  const delta=valid.length>1?valid[valid.length-1].net-valid[0].net:null;
+  const note=delta===null?'Net değişimini değerlendirmek için aynı sınav ve derste en az iki deneme kaydet.':delta>0?'İlk ve son deneme arasında '+fmt(delta)+' net artış var.':delta<0?'İlk ve son deneme arasında '+fmt(Math.abs(delta))+' net düşüş var.':'İlk ve son denemenin neti aynı.';
+  const extra=studies.length||questions.length?'Bu dönemde '+studies.length+' çalışma seansı ve '+questions.length+' soru çözüm kaydı bulunuyor.':'Bu dönemde çalışma veya soru çözüm kaydı bulunmuyor.';
+  $('progressInsights').innerHTML='<div class="insight">📊 '+escapeHtml(note)+' '+escapeHtml(extra)+'</div>';
+ }
+ exam.addEventListener('change',()=>{refreshSelectors();render()});subject.addEventListener('change',render);period.addEventListener('change',render);field.addEventListener('change',render);
+ document.querySelectorAll('.nav-btn').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.view==='dashboard'){refreshSelectors();render()}}));
+ document.addEventListener('click',e=>{if(e.target.closest('#qbSave,#studyFinish,[data-qb-del],[data-history-other-delete]'))queueMicrotask(render)});
+ window.addEventListener('storage',render);
+ window.agsRefreshProgress=()=>{refreshSelectors();render()};
+ refreshSelectors();render();
+})();
+</script>
+<script>
+/* AGS Akademi 5.4: Profil ve hesap ayarları. Auth metadata sunucuda, misafir tercihleri cihazda tutulur. */
+(function(){
+ const $=id=>document.getElementById(id), sb=window.agsSupabase||agsSupabase;
+ const fields={name:$('profileName'),exam:$('profileExam'),year:$('profileYear'),email:$('profileEmail'),reminders:$('profileReminders')};
+ let currentUser=null, profileKey='agsProfile_guest_v1';
+ const say=(id,msg)=>{$(id).textContent=msg};
+ const avatar=$('profileAvatar');
+ function setAvatar(name,photo){
+  avatar.replaceChildren();
+  if(photo){const img=document.createElement('img');img.alt='Profil fotoğrafı';img.src=photo;avatar.appendChild(img)}
+  else avatar.textContent=(name||'👤').trim().charAt(0).toLocaleUpperCase('tr-TR');
+  $('profilePhotoRemove').disabled=!photo;
+ }
+ function makePhoto(file){return new Promise((resolve,reject)=>{
+  if(!file.type.startsWith('image/'))return reject(new Error('Lütfen bir resim dosyası seç.'));
+  if(file.size>12*1024*1024)return reject(new Error('Fotoğraf 12 MB altında olmalı.'));
+  const reader=new FileReader();reader.onerror=()=>reject(new Error('Fotoğraf okunamadı.'));
+  reader.onload=()=>{const img=new Image();img.onerror=()=>reject(new Error('Fotoğraf açılamadı.'));img.onload=()=>{
+   const scale=Math.min(1,320/Math.max(img.width,img.height));const w=Math.max(1,Math.round(img.width*scale)),h=Math.max(1,Math.round(img.height*scale));
+   const canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;canvas.getContext('2d').drawImage(img,0,0,w,h);
+   resolve(canvas.toDataURL('image/jpeg',0.78));
+  };img.src=reader.result};reader.readAsDataURL(file);
+ })}
+ avatar.addEventListener('click',()=>$('profilePhotoFile').click());
+ $('profilePhotoFile').addEventListener('change',async()=>{
+  const file=$('profilePhotoFile').files?.[0];if(!file)return;
+  $('profilePhotoMessage').textContent='Fotoğraf hazırlanıyor…';
+  try{const photo=await makePhoto(file);saveLocal({...readLocal(),photo});setAvatar(fields.name.value,photo);$('profilePhotoMessage').textContent='Fotoğraf bu cihazda kaydedildi.'}
+  catch(e){$('profilePhotoMessage').textContent=e.message||'Fotoğraf kaydedilemedi.'}
+  finally{$('profilePhotoFile').value=''}
+ });
+ $('profilePhotoRemove').addEventListener('click',()=>{const data=readLocal();delete data.photo;saveLocal(data);setAvatar(fields.name.value,null);$('profilePhotoMessage').textContent='Profil fotoğrafı kaldırıldı.'});
+ $('profileUpgrade').addEventListener('click',()=>{$('profilePremiumInfo').hidden=false;$('profilePremiumInfo').scrollIntoView({behavior:'smooth',block:'nearest'})});
+ $('profilePremiumClose').addEventListener('click',()=>{$('profilePremiumInfo').hidden=true});
+
+ function readLocal(){try{return JSON.parse(localStorage.getItem(profileKey)||'{}')}catch{return {}}}
+ function saveLocal(data){localStorage.setItem(profileKey,JSON.stringify(data))}
+ function fill(user){
+  currentUser=user||null;profileKey='agsProfile_'+(user?.id||'guest')+'_v1';
+  const local=readLocal(),meta=user?.user_metadata||{};
+  fields.name.value=user?(meta.name||local.name||''):(local.name||'');
+  fields.exam.value=(user?(meta.preferred_exam||local.exam):local.exam)||'AGS';
+  fields.year.value=String((user?(meta.target_year||local.year):local.year)||'2027');
+  fields.email.value=user?.email||'';fields.email.disabled=!user;
+  fields.reminders.checked=Boolean(local.reminders);
+  $('profileGreeting').textContent=fields.name.value||'Öğrenci Profili';
+  setAvatar(fields.name.value,local.photo||null);
+  $('profileAccountStatus').textContent=user?'Giriş yapılmış hesap':'Misafir profil · yalnızca bu cihazda';
+  ['profileEmailUpdate','profilePasswordUpdate','profileSignOut'].forEach(id=>$(id).disabled=!user);
+  $('profilePassword').disabled=!user;
+  say('profileMessage','');say('profileSecurityMessage','');
+ }
+ async function refresh(){try{const {data,error}=await sb.auth.getUser();if(error&&!String(error.message).includes('Auth session missing'))throw error;fill(data?.user||null)}catch(e){fill(null);say('profileMessage','Hesap bilgisi okunamadı: '+e.message)}}
+ $('profileSave').addEventListener('click',async()=>{
+  const name=fields.name.value.trim(),exam=fields.exam.value,year=fields.year.value;
+  if(!name){say('profileMessage','Lütfen ad soyad gir.');return}
+  $('profileSave').disabled=true;
+  try{
+   if(currentUser){const {error}=await sb.auth.updateUser({data:{name,preferred_exam:exam,target_year:year}});if(error)throw error}
+   saveLocal({...readLocal(),name,exam,year});
+   $('profileGreeting').textContent=name;setAvatar(name,readLocal().photo||null);
+   const header=$('ags-user-name');if(header){const textNode=[...header.childNodes].find(n=>n.nodeType===3);if(textNode)textNode.textContent=name+' ';}
+   say('profileMessage',currentUser?'Profil hesabına kaydedildi.':'Misafir profili bu cihazda kaydedildi.');
+  }catch(e){say('profileMessage','Kaydedilemedi: '+e.message)}finally{$('profileSave').disabled=false}
+ });
+ $('profilePrefsSave').addEventListener('click',()=>{saveLocal({...readLocal(),reminders:fields.reminders.checked});say('profileMessage','Bildirim tercihin kaydedildi; otomatik bildirimler henüz aktif değil.')});
+ $('profileEmailUpdate').addEventListener('click',async()=>{
+  if(!currentUser)return;
+  const newEmail=fields.email.value.trim();if(!newEmail||!newEmail.includes('@')){say('profileSecurityMessage','Geçerli bir e-posta gir.');return}
+  if(newEmail===currentUser.email){say('profileSecurityMessage','Bu zaten mevcut e-posta adresin.');return}
+  const {error}=await sb.auth.updateUser({email:newEmail});say('profileSecurityMessage',error?'E-posta güncellenemedi: '+error.message:'Değişiklik talebi gönderildi. Onay e-postalarını kontrol et.');
+ });
+ $('profilePasswordUpdate').addEventListener('click',async()=>{
+  if(!currentUser)return;const password=$('profilePassword').value;
+  if(password.length<8){say('profileSecurityMessage','Yeni şifre en az 8 karakter olmalı.');return}
+  const {error}=await sb.auth.updateUser({password});$('profilePassword').value='';say('profileSecurityMessage',error?'Şifre değiştirilemedi: '+error.message:'Şifren güncellendi.');
+ });
+ $('profileSignOut').addEventListener('click',async()=>{if(!currentUser)return;const {error}=await sb.auth.signOut();if(error){say('profileSecurityMessage',error.message);return}await refresh();window.agsNavigate?.('dashboard')});
+ $('profileHistory').addEventListener('click',()=>window.agsNavigate?.('history'));
+ sb.auth.onAuthStateChange((_event,session)=>{setTimeout(()=>fill(session?.user||null),0)});
+ document.querySelectorAll('.nav-btn[data-view="profile"]').forEach(b=>b.addEventListener('click',refresh));
+ refresh();
 })();
 </script>
 </body>
