@@ -126,6 +126,9 @@ footer{text-align:center;color:#73859e;font-size:11px;padding:12px}
 <style>
 .v4-toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0}.v4-toolbar button{padding:9px 12px}.v4-toolbar strong{min-width:155px;text-align:center}.v4-calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}.v4-day{min-height:82px;background:#17243a;border:1px solid #2a3a53;border-radius:10px;padding:7px 4px;font-size:11px;color:#dce7f5;overflow:hidden}.v4-day.today{border-color:#45d6a0}.v4-day.outside{opacity:.35}.v4-day b{display:block;margin-bottom:5px}.v4-day small{display:block;font-size:10px;color:#9aabc1;line-height:1.4}.v4-day .done{color:#45d6a0}.v4-day .missed{color:#ff7585}.v4-weekday{text-align:center;color:#9aabc1;font-size:11px;padding:8px 0}.v4-progress{height:9px;border-radius:12px;background:#26354b;overflow:hidden;margin:8px 0}.v4-progress span{display:block;height:100%;background:#45d6a0}.v4-bar{display:flex;align-items:center;gap:8px;margin:9px 0;font-size:12px}.v4-bar label{width:120px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin:0}.v4-bar-track{height:14px;flex:1;border-radius:8px;background:#26354b;overflow:hidden}.v4-bar-track i{display:block;height:100%;background:#79a9ff}.v4-bar strong{width:55px;text-align:right;font-size:11px}.v4-filters{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.v4-filters select{width:auto;flex:1;min-width:120px}.v4-mini{color:#9aabc1;font-size:12px}.v4-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.v4-metrics .metric strong{font-size:20px}@media(max-width:560px){.v4-day{min-height:65px;padding:5px 2px;font-size:10px}.v4-day small{font-size:9px}.v4-metrics .metric strong{font-size:17px}.v4-bar label{width:85px}}
 </style>
+<style>
+.study-clock{text-align:center;padding:28px 12px;background:#17243a;border:1px solid #2a3a53;border-radius:16px;margin:16px 0}.study-phase{color:#45d6a0;font-weight:750}.study-clock-number{font-size:clamp(42px,9vw,72px);font-weight:900;font-variant-numeric:tabular-nums;letter-spacing:2px;margin:10px 0}.study-total{background:#16332e;border:1px solid #45d6a055;border-radius:14px;padding:18px;text-align:center;display:flex;flex-direction:column;gap:8px}.study-total strong{color:#45d6a0;font-size:clamp(30px,7vw,45px);font-variant-numeric:tabular-nums}.study-total small{color:#a9c8bc}.study-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.study-stat{background:#17243a;border:1px solid #2a3a53;border-radius:10px;padding:12px;text-align:center}.study-stat strong{display:block;font-size:18px;color:#45d6a0}.study-stat small{color:#9aabc1;font-size:11px}@media(max-width:450px){.study-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
 </head>
 <body>
 <nav class="app-sidebar" aria-label="Ana menü">
@@ -136,6 +139,7 @@ footer{text-align:center;color:#73859e;font-size:11px;padding:12px}
  <button class="nav-btn" type="button" data-view="history">▤  Deneme Geçmişi</button>
  <button class="nav-btn" type="button" data-view="questions">📚 Soru Bankası</button>
  <button class="nav-btn" type="button" data-view="planner">📅 Çalışma Programı</button>
+ <button class="nav-btn" type="button" data-view="study">⏳ Ders Çalışma</button>
 </nav>
 <main class="wrap">
 
@@ -165,7 +169,7 @@ footer{text-align:center;color:#73859e;font-size:11px;padding:12px}
 </div>
 
 <section class="section">
- <h2>Genel başarı paneli</h2>
+ <h2>AGS başarı paneli</h2>
  <div class="grid">
   <div class="metric"><small>Deneme sayısı</small><strong id="mCount">0</strong></div>
   <div class="metric"><small>Son toplam net</small><strong id="mNet">—</strong></div>
@@ -239,11 +243,17 @@ footer{text-align:center;color:#73859e;font-size:11px;padding:12px}
  <div class="sim-clock" id="simClock" role="timer" aria-live="off">01:50:00</div>
  <div class="sim-status" id="simStatus" role="status">Başlamak için deneme adı gir.</div>
  <div class="sim-actions"><button id="simStart">▶ Başlat</button><button class="secondary" id="simPause" disabled>Duraklat</button><button class="secondary" id="simFinish" disabled>Bitir ve sonucu gir</button><button class="danger" id="simReset">Sıfırla</button></div>
- <div class="sim-hint">Süreler 2026 ÖSYM/MEB açıklamalarına göre otomatik seçilir. ÖABT için alanını da seç. İstersen süreyi elle değiştirebilirsin. Süre dolduğunda sesli uyarı verilir. Sayaç cihaz saatini temel alır; sekme kapansa da aynı tarayıcıda kaldığı yerden hesaplanır. Sonuç girişinde mevcut AGS branş formu kullanılır; diğer sınavların branş formları sonraki aşamada eklenecek.</div>
+ <div class="sim-hint">Süreler 2026 ÖSYM/MEB açıklamalarına göre otomatik seçilir. ÖABT için alanını da seç. İstersen süreyi elle değiştirebilirsin. Süre dolduğunda sesli uyarı verilir. Sayaç cihaz saatini temel alır; sekme kapansa da aynı tarayıcıda kaldığı yerden hesaplanır. Sonuç girişinde Deneme Kaydet bölümünden sınav türünü seçebilirsin.</div>
 </section>
 
 </div>
-<div class="app-view" id="view-entry"><h1 class="view-heading">Deneme Sonucu Kaydet</h1><section class="section" id="examEntry">
+<div class="app-view" id="view-entry"><h1 class="view-heading">Deneme Kaydet</h1>
+<section class="section"><h2>Hangi sınavın denemesini kaydedeceksin?</h2>
+<label for="recordExamType">Sınav türünü seç</label>
+<select id="recordExamType" aria-label="Kaydedilecek sınav türü">
+<option value="AGS">MEB-AGS</option><option value="OABT">ÖABT</option><option value="KPSS-L">KPSS Lisans</option><option value="KPSS-ON">KPSS Ön Lisans</option><option value="KPSS-ORT">KPSS Ortaöğretim</option>
+</select><div class="notice">Seçimine göre dersler ve doğru-yanlış kutuları değişir. AGS kayıtları ve diğer sınavların analizleri birbirine karışmaz.</div></section>
+<div id="agsEntryPanel"><section class="section" id="examEntry">
  <h2>Yeni deneme kaydet</h2>
  <div class="row2">
   <div>
@@ -281,15 +291,24 @@ footer{text-align:center;color:#73859e;font-size:11px;padding:12px}
  </div>
  <div class="notice">Doğru/yanlış kutularındaki soluk “0” yer tutucudur. Sayı girmezsen 0 kabul edilir. Her branşta doğru + yanlış sayısı soru sayısını aşamaz.</div>
 </section>
-
+</div>
+<div id="otherEntryPanel" hidden>
+<section class="section"><h2>Sınavına özel deneme kaydet</h2><div class="notice">Denemeler sınav türü ve ÖABT alanına göre ayrı kaydedilir. 2026 ÖABT alanları ÖSYM'nin yayımladığı test listesine göre sınırlandırılmıştır.</div>
+<div class="row2"><div><label for="oeType">Sınav türü</label><select id="oeType"><option value="KPSS-L">KPSS Lisans (GY-GK)</option><option value="KPSS-ON">KPSS Ön Lisans</option><option value="KPSS-ORT">KPSS Ortaöğretim</option><option value="OABT">ÖABT</option></select></div><div id="oeFieldBox" style="display:none"><label for="oeField">ÖABT alanı (2026)</label><select id="oeField"></select></div></div>
+<div class="row2" style="margin-top:12px"><div><label for="oeName">Deneme adı</label><input id="oeName" maxlength="60" placeholder="Örn. KPSS deneme 1"></div><div><label for="oeDate">Tarih</label><div class="calendar-field"><input id="oeDate" type="date"><button type="button" class="calendar-open" data-calendar="oeDate" title="Takvim aç">📅</button></div></div></div>
+<div id="oeSubjects"></div><div class="metric"><small>TOPLAM NET</small><strong id="oeTotal">0,00</strong><small id="oeCount">120 soru</small></div>
+<div class="notice">Net = Doğru − Yanlış / 4. Resmî standart puan, aday ortalaması ve standart sapma olmadan hesaplanamayacağı için bu bölümde uydurma puan gösterilmez.</div><div class="error" id="oeError"></div><div class="actions"><button id="oeSave">Denemeyi kaydet</button></div></section>
+<section class="section"><h2>Bu sınava ait analizler</h2><div class="grid"><div class="metric"><small>Deneme</small><strong id="oeStatCount">0</strong></div><div class="metric"><small>Ortalama net</small><strong id="oeStatAvg">—</strong></div><div class="metric"><small>Son net</small><strong id="oeStatLast">—</strong></div></div><div class="chartbox"><div class="charttitle">Toplam net gelişimi</div><div id="oeChart" class="empty">Henüz deneme yok.</div></div><div id="oeBranchStats"></div><h2 style="margin-top:18px">Deneme geçmişi</h2><div id="oeHistory"></div></section></div>
 </div>
 <div class="app-view" id="view-history"><h1 class="view-heading">Deneme Geçmişi</h1><section class="section">
  <h2>Deneme geçmişi</h2>
- <div id="history"><div class="empty">Henüz kayıt yok.</div></div>
+ <div class="row2" style="margin:12px 0 16px"><div><label for="historyExamType">Sınav türünü seç</label><select id="historyExamType"><option value="AGS">MEB-AGS</option><option value="OABT">ÖABT</option><option value="KPSS-L">KPSS Lisans</option><option value="KPSS-ON">KPSS Ön Lisans</option><option value="KPSS-ORT">KPSS Ortaöğretim</option></select></div><div id="historyFieldBox" hidden><label for="historyField">ÖABT alanı</label><select id="historyField"></select></div></div>
+ <div id="historyAgsPanel"><div id="history"><div class="empty">Henüz kayıt yok.</div></div>
  <div class="actions">
   <button class="secondary" id="export">CSV dışa aktar</button>
-  <button class="danger" id="deleteAll">Tüm kayıtları sil</button>
- </div>
+  <button class="danger" id="deleteAll">Tüm AGS kayıtlarını sil</button>
+ </div></div>
+ <div id="historyOtherPanel" hidden><div id="historyOtherList" class="empty">Henüz kayıt yok.</div></div>
 </section>
 
 </div>
@@ -312,6 +331,19 @@ footer{text-align:center;color:#73859e;font-size:11px;padding:12px}
  </section>
  <section class="section" id="v4Planner"><h2>🗓️ Haftalık ve aylık çalışma takvimi</h2><div class="v4-toolbar"><button class="secondary" id="v4Prev" type="button">‹ Önceki</button><strong id="v4PeriodLabel"></strong><button class="secondary" id="v4Next" type="button">Sonraki ›</button><button class="secondary" id="v4Today" type="button">Bugün</button></div><div class="v4-filters"><select id="v4CalendarMode" aria-label="Takvim görünümü"><option value="week">Haftalık görünüm</option><option value="month">Aylık görünüm</option></select></div><div id="v4PlanMetrics"></div><div id="v4Calendar"></div><div class="notice">Takvimde bir güne dokunarak yeni hedef tarihini seçebilirsin. Kısmen tamamlanan görevler ilerleme hesabına yarım katkı sağlar.</div></section>
 <section class="section"><h2>Plan ilerlemesi</h2><div id="planSummary"></div><h2 style="margin-top:20px">Görevlerim</h2><div id="planHistory"></div></section>
+</div>
+
+<div class="app-view" id="view-study">
+ <h1 class="view-heading">Ders Çalışma</h1>
+ <section class="section"><h2>Derse Başla</h2><p class="sub">Çalışmanı takip et; molalar ve duraklatmalar net çalışma sürene eklenmez.</p>
+ <div class="row2"><div><label for="studySubject">Çalışılan ders</label><select id="studySubject"><option>Matematik</option><option>Türkçe</option><option>Tarih</option><option>Coğrafya</option><option>Eğitim Bilimleri</option><option>Mevzuat</option><option>Diğer</option></select></div><div><label for="studyMode">Çalışma modu</label><select id="studyMode"><option value="pomodoro">Pomodoro</option><option value="free">Serbest Çalışma</option></select></div></div>
+ <div id="studyPomoOptions" class="row2" style="margin-top:12px"><div><label for="studyFocus">Odaklanma (dakika)</label><select id="studyFocus"><option value="25">25</option><option value="40">40</option><option value="50" selected>50</option><option value="60">60</option></select></div><div><label for="studyBreak">Mola (dakika)</label><select id="studyBreak"><option value="5">5</option><option value="10" selected>10</option><option value="15">15</option></select></div></div>
+ <div class="study-clock"><div id="studyPhase" class="study-phase">Odaklanma</div><div id="studyClock" class="study-clock-number" aria-live="off">50:00</div><div id="studyState" class="sub">Başlamak için Derse Başla'ya bas.</div></div>
+ <div class="study-total"><span>⏱ Toplam Net Çalışma Süresi</span><strong id="studyNetTime">00:00:00</strong><small>Yalnızca aktif çalışma sayılır. Molalar ve duraklatmalar hariçtir.</small></div>
+ <div class="actions"><button id="studyStart" type="button">▶ Derse Başla</button><button id="studyPause" type="button" class="secondary" disabled>⏸ Duraklat</button><button id="studyFinish" type="button" class="secondary" disabled>■ Bitir ve Kaydet</button></div>
+ <div class="actions"><button id="studySkipBreak" type="button" class="secondary" hidden>Molayı Bitir</button></div><div id="studyMessage" class="notice" role="status">Seansını bitirdiğinde net çalışma süresi kaydedilir.</div>
+ </section>
+ <section class="section"><h2>Çalışma İstatistikleri</h2><div id="studySummary"></div><h3 style="margin-top:16px">Son Çalışmalar</h3><div id="studyHistory"></div></section>
 </div>
 <footer>AGS Akademi · Veriler cihazında saklanır. Tarayıcı verilerini silersen kayıtlar da silinebilir.</footer>
 </main>
@@ -1129,6 +1161,45 @@ render();
 </script>
 
 
+<script>
+/* 2026 ÖSYM ÖABT test listesi; ÖABT olmayan branşlar bilerek dahil edilmedi. */
+(function(){
+const fields=['İlköğretim Matematik','Fen Bilimleri','Matematik','Fizik','Kimya / Kimya Teknolojisi','Türkçe','Sosyal Bilgiler','Türk Dili ve Edebiyatı','Tarih','Coğrafya','Biyoloji','Din Kültürü ve Ahlak Bilgisi / İmam Hatip Lisesi Meslek Dersleri','Rehberlik','Beden Eğitimi','Okul Öncesi','Sınıf Öğretmenliği','Özel Eğitim'];
+const $o=id=>document.getElementById(id);
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmtO=n=>Number(n||0).toFixed(2).replace('.',',');
+$o('oeField').innerHTML=fields.map(f=>`<option value="${esc(f)}">${esc(f)}</option>`).join('');
+$o('oeDate').value=new Date().toLocaleDateString('en-CA');
+function scope(){return $o('oeType').value+($o('oeType').value==='OABT'?'|'+$o('oeField').value:'');}
+function storageKey(){return 'agsAkademiOtherExams_v1_'+(window.agsCurrentUserId||'guest');}
+function read(){try{const a=JSON.parse(localStorage.getItem(storageKey())||'[]');return Array.isArray(a)?a:[]}catch(e){return []}}
+function subjects(){return $o('oeType').value==='OABT'?[{id:'field',name:$o('oeField').value,q:50}]:[{id:'gy',name:'Genel Yetenek',q:60},{id:'gk',name:'Genel Kültür',q:60}];}
+function refreshForm(){
+ $o('oeFieldBox').style.display=$o('oeType').value==='OABT'?'block':'none';
+ $o('oeSubjects').innerHTML=subjects().map(s=>`<div class="subject"><div class="subjecthead"><span>${esc(s.name)}</span><span class="count">${s.q} soru</span></div><div class="fields"><div><label>Doğru</label><input id="oe_${s.id}_c" type="number" min="0" max="${s.q}" step="1" placeholder="0"></div><div><label>Yanlış</label><input id="oe_${s.id}_w" type="number" min="0" max="${s.q}" step="1" placeholder="0"></div></div><div class="netline"><span>Boş: <b id="oe_${s.id}_b">${s.q}</b></span><span>Net: <b id="oe_${s.id}_n">0,00</b></span></div></div>`).join('');
+ $o('oeSubjects').querySelectorAll('input').forEach(x=>x.addEventListener('input',calculate));calculate();refreshStats();
+}
+function calculate(){let total=0,ok=true,parts={},raw={};for(const s of subjects()){
+ const cEl=$o('oe_'+s.id+'_c'),wEl=$o('oe_'+s.id+'_w');const c=Number(cEl.value||0),w=Number(wEl.value||0);
+ if(!Number.isInteger(c)||!Number.isInteger(w)||c<0||w<0||c+w>s.q)ok=false;
+ const n=c-w/4;total+=n;parts[s.id]=n;raw[s.id]={c,w};$o('oe_'+s.id+'_b').textContent=s.q-c-w;$o('oe_'+s.id+'_n').textContent=fmtO(n);
+ }$o('oeTotal').textContent=fmtO(total);$o('oeCount').textContent=subjects().reduce((a,s)=>a+s.q,0)+' soru';return {total,ok,parts,raw};}
+function refreshStats(){let a=read().filter(r=>r.scope===scope()).sort((x,y)=>x.date.localeCompare(y.date)||(x.createdAt||'').localeCompare(y.createdAt||''));
+ $o('oeStatCount').textContent=a.length;$o('oeStatAvg').textContent=a.length?fmtO(a.reduce((t,r)=>t+r.total,0)/a.length):'—';$o('oeStatLast').textContent=a.length?fmtO(a[a.length-1].total):'—';
+ $o('oeChart').innerHTML=a.length?`<div class="scroll"><div style="display:flex;align-items:flex-end;gap:8px;min-height:170px;padding:12px">${a.map((r,i)=>`<div title="${esc(r.name)}: ${fmtO(r.total)} net" style="flex:1;min-width:28px;text-align:center"><div style="font-size:10px">${fmtO(r.total)}</div><div style="height:${Math.max(3,Math.max(0,r.total)/Math.max(1,...a.map(x=>x.total))*125)}px;background:#45d6a0;border-radius:5px 5px 0 0"></div><div style="font-size:10px;color:#9aabc1">${i+1}</div></div>`).join('')}</div></div>`:'<div class="empty">Bu sınav için henüz kayıt yok.</div>';
+ $o('oeBranchStats').innerHTML=a.length?subjects().map(s=>`<div class="insight">${esc(s.name)} · Ortalama <b>${fmtO(a.reduce((t,r)=>t+Number(r.parts[s.id]||0),0)/a.length)}</b> net</div>`).join(''):'';
+ $o('oeHistory').innerHTML=a.length?a.slice().reverse().map(r=>`<div class="history-item"><div class="history-top"><div><b>${esc(r.name)}</b><div class="history-meta">${esc(r.date)} · ${fmtO(r.total)} net</div></div><button class="danger" type="button" data-oe-del="${esc(r.id)}">Sil</button></div><div class="branch-list">${Object.entries(r.parts).map(([id,n])=>`<div class="branch-chip">${esc(subjects().find(s=>s.id===id)?.name||id)} <b>${fmtO(n)}</b></div>`).join('')}</div></div>`).join(''):'<div class="empty">Henüz kayıt yok.</div>';
+ $o('oeHistory').querySelectorAll('[data-oe-del]').forEach(b=>b.onclick=()=>{if(!confirm('Bu deneme silinsin mi?'))return;localStorage.setItem(storageKey(),JSON.stringify(read().filter(r=>r.id!==b.dataset.oeDel)));refreshStats()});
+}
+$o('oeType').addEventListener('change',refreshForm);$o('oeField').addEventListener('change',refreshForm);
+$o('oeSave').onclick=()=>{const x=calculate(),name=$o('oeName').value.trim(),date=$o('oeDate').value;if(!name||!date||!x.ok){$o('oeError').textContent='Deneme adı, tarih ve doğru-yanlış sayılarını kontrol et.';return;}
+const a=read();a.push({id:'other-'+Date.now()+'-'+Math.random().toString(36).slice(2,7),scope:scope(),type:$o('oeType').value,field:$o('oeType').value==='OABT'?$o('oeField').value:null,name,date,total:x.total,parts:x.parts,raw:x.raw,createdAt:new Date().toISOString()});localStorage.setItem(storageKey(),JSON.stringify(a));$o('oeError').textContent='Deneme kaydedildi.';$o('oeName').value='';refreshForm();};
+/* Kullanıcı değiştirince başka kullanıcının kayıtları gösterilmez. */
+const originalLoad=window.agsLoadUserRecords;
+if(typeof originalLoad==='function')window.agsLoadUserRecords=function(user){originalLoad(user);refreshStats();};
+refreshForm();
+})();
+</script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
@@ -1310,7 +1381,7 @@ await updateUI();
 
 <script>
 (function(){
- const views=['dashboard','simulator','entry','history','questions','planner'];
+ const views=['dashboard','simulator','entry','history','questions','planner','study'];
  window.agsNavigate=function(view){
   if(!views.includes(view))view='dashboard';
   document.querySelectorAll('.app-view').forEach(el=>el.classList.toggle('active',el.id==='view-'+view));
@@ -1473,6 +1544,98 @@ document.addEventListener('click',function(event){
  document.querySelectorAll('.nav-btn').forEach(b=>b.addEventListener('click',refresh));
  window.addEventListener('storage',refresh);
  refresh();
+})();
+</script>
+<script>
+/* Tek Deneme Kaydet menüsü: AGS ve diğer sınavların mevcut kayıt sistemlerini birleştirir. */
+(function(){
+ const choose=document.getElementById('recordExamType');
+ const ags=document.getElementById('agsEntryPanel');
+ const other=document.getElementById('otherEntryPanel');
+ const oe=document.getElementById('oeType');
+ function update(){
+  const isAgs=choose.value==='AGS';
+  ags.hidden=!isAgs;other.hidden=isAgs;
+  ags.style.display=isAgs?'':'none';other.style.display=isAgs?'none':'';
+  if(!isAgs){oe.value=choose.value;oe.dispatchEvent(new Event('change'));}
+ }
+ choose.addEventListener('change',update);
+ // Other-exam selector is controlled by the common selector, avoiding two conflicting selectors.
+ oe.closest('.row2').querySelector('label[for="oeType"]').parentElement.style.display='none';
+ update();
+ window.agsChooseRecordExam=function(type){
+  choose.value=['AGS','OABT','KPSS-L','KPSS-ON','KPSS-ORT'].includes(type)?type:'AGS';
+  update();window.agsNavigate('entry');
+ };
+})();
+</script>
+<script>
+/* 5.1: Deneme Geçmişi, sınav türüne ve ÖABT alanına göre ayrı gösterilir. */
+(function(){
+ const byId=id=>document.getElementById(id);
+ const type=byId('historyExamType'),field=byId('historyField');
+ const fieldBox=byId('historyFieldBox'),ags=byId('historyAgsPanel'),other=byId('historyOtherPanel'),list=byId('historyOtherList');
+ const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const fmt=x=>Number(x||0).toFixed(2).replace('.',',');
+ const key=()=> 'agsAkademiOtherExams_v1_'+(window.agsCurrentUserId||'guest');
+ const read=()=>{try{const a=JSON.parse(localStorage.getItem(key())||'[]');return Array.isArray(a)?a:[]}catch(e){return []}};
+ const names={'gy':'Genel Yetenek','gk':'Genel Kültür','field':'Alan Testi'};
+ function render(){
+  const isAgs=type.value==='AGS';
+  ags.hidden=!isAgs;other.hidden=isAgs;
+  ags.style.display=isAgs?'':'none';other.style.display=isAgs?'none':'';
+  fieldBox.hidden=type.value!=='OABT';fieldBox.style.display=type.value==='OABT'?'':'none';
+  if(isAgs)return;
+  const scope=type.value+(type.value==='OABT'?'|'+field.value:'');
+  const rows=read().filter(r=>r.scope===scope).sort((a,b)=>String(b.date||'').localeCompare(String(a.date||''))||String(b.createdAt||'').localeCompare(String(a.createdAt||'')));
+  list.innerHTML=rows.length?rows.map((r,i)=>`<div class="history-item"><div class="history-top"><div><div class="history-name">${esc(r.name)}</div><div class="history-meta">${esc(r.date)} · ${fmt(r.total)} net${r.field?' · '+esc(r.field):''}</div></div><button class="danger" type="button" data-history-other-delete="${esc(r.id)}" style="padding:7px 10px;font-size:11px;flex:0 0 auto">Sil</button></div><details class="history-detail"><summary>Branş ayrıntılarını göster</summary><div class="branch-list">${Object.entries(r.parts||{}).map(([id,net])=>`<div class="branch-chip"><span>${esc(id==='field'?(r.field||'Alan Testi'):(names[id]||id))}</span><b>${fmt(net)} net</b></div>`).join('')}</div></details></div>`).join(''):'<div class="empty">Bu sınav için henüz deneme kaydı yok.</div>';
+ }
+ function syncFields(){const current=field.value;field.innerHTML=byId('oeField').innerHTML;if([...field.options].some(x=>x.value===current))field.value=current;render();}
+ type.addEventListener('change',render);field.addEventListener('change',render);
+ list.addEventListener('click',e=>{const btn=e.target.closest('[data-history-other-delete]');if(!btn)return;const id=btn.dataset.historyOtherDelete;const row=read().find(r=>r.id===id);if(!row||!confirm(row.name+' kaydını silmek istiyor musun?'))return;localStorage.setItem(key(),JSON.stringify(read().filter(r=>r.id!==id)));render();byId('oeType').dispatchEvent(new Event('change'));});
+ document.querySelectorAll('.nav-btn[data-view="history"]').forEach(b=>b.addEventListener('click',()=>{syncFields();render()}));
+ document.addEventListener('click',e=>{if(e.target.closest('#oeSave,#oeSave,[data-oe-del],#save,#deleteAll,[data-del]'))queueMicrotask(render)});
+ window.addEventListener('storage',render);
+ syncFields();
+})();
+</script>
+<script>
+/* Ders Çalışma: gerçek zamanlı Pomodoro / serbest çalışma ve molasız net süre */
+(function(){
+ const el=id=>document.getElementById(id), mode=el('studyMode'),focus=el('studyFocus'),breakM=el('studyBreak');
+ const storageKey=()=> 'agsAkademiStudy_v1_'+(window.agsCurrentUserId||'guest');
+ const read=()=>{try{const x=JSON.parse(localStorage.getItem(storageKey())||'[]');return Array.isArray(x)?x:[]}catch{return []}};
+ const two=n=>String(n).padStart(2,'0');
+ const hhmmss=sec=>{sec=Math.max(0,Math.floor(sec));return [Math.floor(sec/3600),Math.floor(sec%3600/60),sec%60].map(two).join(':')};
+ const mmss=sec=>{sec=Math.max(0,Math.ceil(sec));return two(Math.floor(sec/60))+':'+two(sec%60)};
+ let session=null, ticker=null;
+ function settle(){if(session&&session.running){const now=Date.now(),delta=Math.max(0,now-session.lastTick);if(session.phase==='focus')session.focusMs+=delta;session.phaseMs+=delta;session.lastTick=now;}}
+ function render(){
+  const isP=mode.value==='pomodoro';el('studyPomoOptions').hidden=!isP;
+  if(!session){el('studyPhase').textContent=isP?'Odaklanma':'Serbest Çalışma';el('studyClock').textContent=isP?mmss(Number(focus.value)*60):'00:00';el('studyNetTime').textContent='00:00:00';el('studyState').textContent='Başlamak için Derse Başla\'ya bas.';}
+  else{
+   el('studyPhase').textContent=session.phase==='break'?'Mola':session.mode==='pomodoro'?'Odaklanma':'Serbest Çalışma';
+   el('studyClock').textContent=session.mode==='free'?hhmmss(session.focusMs/1000):mmss((session.phase==='focus'?session.focusMinutes:session.breakMinutes)*60-session.phaseMs/1000);
+   el('studyNetTime').textContent=hhmmss(session.focusMs/1000);
+   el('studyState').textContent=session.running?(session.phase==='break'?'Mola devam ediyor · net süre durdu':'Çalışma devam ediyor'):'Duraklatıldı';
+  }
+  el('studyStart').disabled=!!session&&session.running;
+  el('studyStart').textContent=session?'▶ Devam Et':'▶ Derse Başla';
+  el('studyPause').disabled=!session||!session.running;
+  el('studyFinish').disabled=!session;
+  el('studySkipBreak').hidden=!session||session.phase!=='break';
+  mode.disabled=!!session;focus.disabled=!!session;breakM.disabled=!!session;el('studySubject').disabled=!!session;
+ }
+ function tick(){if(!session||!session.running)return;settle();if(session.mode==='pomodoro'){
+  let guard=0;while(session.phaseMs >= (session.phase==='focus'?session.focusMinutes:session.breakMinutes)*60000&&guard++<50){const limit=(session.phase==='focus'?session.focusMinutes:session.breakMinutes)*60000;session.phaseMs-=limit;session.phase=session.phase==='focus'?'break':'focus';if(session.phase==='focus')session.rounds++;if(session.phase==='break'){el('studyMessage').textContent='Odaklanma tamamlandı, mola başladı. Mola net süreye eklenmez.';}else el('studyMessage').textContent='Mola bitti, yeni odaklanma başladı.';}
+ }render();}
+ el('studyStart').onclick=()=>{if(!session){session={mode:mode.value,subject:el('studySubject').value,focusMinutes:Number(focus.value),breakMinutes:Number(breakM.value),phase:'focus',phaseMs:0,focusMs:0,rounds:1,running:false,startedAt:new Date().toISOString()};}session.lastTick=Date.now();session.running=true;el('studyMessage').textContent='Çalışma başladı. Toplam net süre otomatik hesaplanıyor.';render();};
+ el('studyPause').onclick=()=>{settle();session.running=false;el('studyMessage').textContent='Duraklatıldı. Net süre ilerlemiyor.';render();};
+ el('studySkipBreak').onclick=()=>{if(!session||session.phase!=='break')return;settle();session.phase='focus';session.phaseMs=0;session.rounds++;el('studyMessage').textContent='Mola sonlandırıldı; odaklanmaya dönüldü.';render();};
+ el('studyFinish').onclick=()=>{if(!session)return;settle();const completed=session;session=null;const seconds=Math.floor(completed.focusMs/1000);if(seconds>0){const rows=read();rows.unshift({id:String(Date.now())+'_'+Math.random().toString(36).slice(2),date:new Date().toLocaleDateString('en-CA'),subject:completed.subject,mode:completed.mode,seconds,rounds:completed.rounds,startedAt:completed.startedAt});try{localStorage.setItem(storageKey(),JSON.stringify(rows))}catch(e){el('studyMessage').textContent='Kayıt yapılamadı: cihaz depolama alanını kontrol et.';render();return;}el('studyMessage').textContent='Çalışma kaydedildi: '+hhmmss(seconds)+' net süre.';}else el('studyMessage').textContent='Çalışma süresi oluşmadığı için kayıt yapılmadı.';render();renderStats();};
+ [mode,focus,breakM].forEach(x=>x.addEventListener('change',render));
+ function renderStats(){const rows=read(),today=new Date().toLocaleDateString('en-CA'),weekAgo=new Date(Date.now()-6*86400000).toLocaleDateString('en-CA');const sum=a=>a.reduce((t,x)=>t+Number(x.seconds||0),0);const todayS=sum(rows.filter(x=>x.date===today)),weekS=sum(rows.filter(x=>x.date>=weekAgo)),allS=sum(rows);el('studySummary').innerHTML='<div class="study-stats"><div class="study-stat"><strong>'+hhmmss(todayS)+'</strong><small>Bugün</small></div><div class="study-stat"><strong>'+hhmmss(weekS)+'</strong><small>Son 7 gün</small></div><div class="study-stat"><strong>'+hhmmss(allS)+'</strong><small>Tüm zamanlar</small></div></div>';const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));el('studyHistory').innerHTML=rows.length?rows.slice(0,30).map(x=>'<div class="history-item"><div class="history-name">'+esc(x.subject)+' · '+(x.mode==='pomodoro'?'Pomodoro':'Serbest Çalışma')+'</div><div class="history-meta">'+esc(x.date)+' · '+hhmmss(x.seconds)+' net çalışma</div></div>').join(''):'<div class="empty">Henüz çalışma kaydı yok.</div>';}
+ ticker=setInterval(tick,250);document.addEventListener('visibilitychange',()=>{if(!document.hidden)tick()});window.addEventListener('storage',renderStats);document.querySelectorAll('.nav-btn[data-view="study"]').forEach(b=>b.addEventListener('click',renderStats));render();renderStats();
 })();
 </script>
 </body>
