@@ -1,0 +1,10 @@
+{
+  "name": "AGS Akademi",
+  "short_name": "AGS Akademi",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0b1220",
+  "theme_color": "#101827",
+  "description": "AGS sınav hazırlık platformu",
+  "orientation": "portrait"
+}
